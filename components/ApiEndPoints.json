@@ -1,0 +1,7 @@
+{
+    "_base":"https://tasktrackerapinv2.vercel.app/task",
+    "tasks":"tasks",
+    "completed_tasks":"completed-tasks",
+    "archieved_tasks":"archieved-tasks",
+    "add_task":"addtask"
+}
