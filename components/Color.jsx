@@ -4,10 +4,10 @@ import React from 'react'
 const Color = ({color}) => {
   return (
     <View style={styles.colorContainer}>
-      {/* <Text>{color}</Text>
+      <Text>{color}</Text>
       {[1,0.7,0.4].map(opacity=>(
         <View key={opacity} style={[styles.colorBox, {backgroundColor: color, opacity}]}></View>
-      ))} */}
+      ))}
     </View>
   )
 }

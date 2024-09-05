@@ -1,10 +1,10 @@
 import { View, Text } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import Color from '../components/Color'
-import ShowTasks from '../components/ShowTasks'
-import ApiEndPoints  from '../components/ApiEndPoints'
+import Color from '../../components/Color'
+import ShowTasks from '../../components/ShowTasks'
+import ApiEndPoints from '../../components/ApiEndPoints.json'
 import axios from 'axios'
-import Loading from '../components/Loading'
+import Loading from '../../components/Loading'
 
 const ArchievedTasks = () => {
 const [archivedTasks,setArchievedTasks] = useState([])

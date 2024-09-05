@@ -1,10 +1,10 @@
 import { View, Text } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import Color from '../components/Color'
-import ShowTasks from '../components/ShowTasks'
-import ApiEndPoints from '../components/ApiEndPoints.json'
+import Color from '../../components/Color'
+import ShowTasks from '../../components/ShowTasks'
+import ApiEndPoints from '../../components/ApiEndPoints.json'
 import axios from 'axios'
-import Loading from '../components/Loading'
+import Loading from '../../components/Loading'
 const Home = () => {
 const [tasks,setTasks] = useState([])
 const [fetching,setFetching] =useState(true)

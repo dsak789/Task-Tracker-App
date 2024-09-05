@@ -1,0 +1,13 @@
+{
+
+    "colors": {
+        "primary": "#3498db",
+        "secondary": "#2ecc71"
+      },
+      "sizes": {
+        "small": 24,
+        "medium": 30,
+        "large": 36
+      }
+
+}
