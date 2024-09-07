@@ -2,12 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { View, Button, Image, StyleSheet } from 'react-native';
 import { Stack } from 'expo-router';
 import { useRouter } from 'expo-router';
-import dp from '../assets/images/TaskTracker48.png'
-
+import dp from '../assets/images/TaskTracker1024.png'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const _layout = () => {
   const router = useRouter();
-
- 
 
   return (
     <View style={styles.appContainer}>
@@ -25,20 +23,28 @@ const _layout = () => {
             title:'',
             headerLeft: () => (     
               <View style={styles.headerLeft}>
-                {/* Profile Picture */}
                 <Image
                   source={dp} 
                   style={styles.profileImage}
+                  onPress={()=> console.log("TaskTracker")}
                 />
-                {/* Profile Button */}
                 {/* <Button title="Profile" onPress={() => router.push('/tasks/Profile')} /> */}
               </View>
             ),
             
             headerRight: () => (
-              <Button title="Logout" onPress={() => router.push('/auth') } />
+                <View style={styles.headerLeft}>
+                    <Button title="Logout" onPress={ async() => {
+                      try {
+
+                        await AsyncStorage.setItem('loginInfo',JSON.stringify({'isLogin':false}))
+                        router.replace('/auth')
+                      } catch (error) {
+                       console.log(error) 
+                      }
+                    } } />
+                </View>
             ),
-            headerShadowVisible:true
           }}
         />
       </Stack>
@@ -59,6 +65,7 @@ const styles = StyleSheet.create({
   headerLeft: {
     flexDirection: 'row',
     alignItems: 'center',
+    margin:15
   },
   profileImage: {
     width: 40,

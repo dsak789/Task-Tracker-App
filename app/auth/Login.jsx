@@ -1,18 +1,22 @@
-import { View, Button } from 'react-native';
+import { View, Button, ScrollView } from 'react-native';
 import React, { useState } from 'react';
 import Color from '../../components/Color';
 import { useRouter } from 'expo-router';
+import LoginForm from '../../components/LoginForm';
 
 const Login = () => {
   const router = useRouter();
   // const [loggedIn,setLoggedIn] = useState(true)
   // if (loggedIn) {
-  //   router.push('/tasks');
+  //   router.replace('/tasks');
   // } 
   return (
     <View>
-      <Color color='#568233' />
+      <ScrollView>
+      {/* <Color color='#568233' /> */}
+      <LoginForm/>
       <Button title="Go to Tasks" onPress={() => router.push('/tasks')} />
+      </ScrollView>
     </View>
   );
 };
