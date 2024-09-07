@@ -4,11 +4,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import ApiEndPoints from '../components/ApiEndPoints.json'
 import { useRouter } from 'expo-router'
-
+import Loading from '../components/Loading'
 const LoginForm = () => {
     const router = useRouter()
     const [username,setUsername]= useState('')
     const [password,setPassword]= useState('')
+    const [error,setError] = useState("")
+    const [loading,setloading] = useState(false)
 
     const storage_handle = async(info) =>{
         try {
@@ -21,6 +23,7 @@ const LoginForm = () => {
     const  login_handle = async () => {
 
         try {
+            setloading(true)
             const res = await axios.post(`${ApiEndPoints._base}/${ApiEndPoints.login}`,
                 {
                     'username':username,
@@ -38,20 +41,30 @@ const LoginForm = () => {
                         'username':user.username,
                         'dpUrl': dpurl
                     }
+                    console.log(info)
+                    console.log(user)
                     await storage_handle(info)
 
                     router.replace('/tasks')
                 }
                 else if(res.data.message == 'Password Incorrect..!'){
-                    alert("error"+res.data.message)
+                    console.log(res.data.message)
+                }
+                else if(res.data.message == "User Not doesn't Exist"){
+                    console.log(res.data.message)
                 }
         } catch (error) {
+            setloading(false)
             console.log(error)
+            setError(error)
         }
     }
   return (
     <ScrollView contentContainerStyle={styles.loginContainer}>
+        {!loading ? 
         <View>
+            
+            {error !="" && <Text style={styles.error}>Error</Text>}
             <Text>UserName</Text>
             <TextInput style={styles.input}
                 placeholder='Enter Username' 
@@ -64,8 +77,9 @@ const LoginForm = () => {
                 value={password}
                 onChangeText={e => setPassword(e)}
                 />
-            <Button title='Login' onPress={login_handle}/>
-        </View>
+            <Button title='Login' onPress={login_handle}/> 
+
+        </View> :<Loading text="Login Process"/>}
     </ScrollView>
   )
 }
@@ -83,5 +97,10 @@ const styles = StyleSheet.create({
       marginBottom: 20,
       padding: 10,
     },
+    error:{
+        color:'red',
+        margin:10,
+        borderColor:'red'
+    }
   });
   

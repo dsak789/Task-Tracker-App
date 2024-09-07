@@ -6,10 +6,7 @@ import LoginForm from '../../components/LoginForm';
 
 const Login = () => {
   const router = useRouter();
-  // const [loggedIn,setLoggedIn] = useState(true)
-  // if (loggedIn) {
-  //   router.replace('/tasks');
-  // } 
+  
   return (
     <View>
       <ScrollView>
