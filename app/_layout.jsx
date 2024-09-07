@@ -1,37 +1,69 @@
-import React, { useState } from 'react'
-import Auth from './Authentication/_layout'
-import Tasks from './tasks/_layout'
-import { View, Text, StyleSheet } from 'react-native'
-import { Stack } from 'expo-router'
+import React, { useState, useEffect } from 'react';
+import { View, Button, Image, StyleSheet } from 'react-native';
+import { Stack } from 'expo-router';
+import { useRouter } from 'expo-router';
+import dp from '../assets/images/TaskTracker48.png'
 
 const _layout = () => {
-    const [log,setLog] = useState(true)
+  const router = useRouter();
+
+ 
+
   return (
     <View style={styles.appContainer}>
-        <Stack>
-          <Stack.Screen
-          name='Authentication'
+      <Stack>
+        <Stack.Screen
+          name="auth"
           options={{
-            headerShown:false
-          }}/>
-          <Stack.Screen
-          name='tasks'
+            title:"Authentication",
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="tasks"
           options={{
-            headerShown:false
-          }}/>
-        </Stack>
+            title:'',
+            headerLeft: () => (     
+              <View style={styles.headerLeft}>
+                {/* Profile Picture */}
+                <Image
+                  source={dp} 
+                  style={styles.profileImage}
+                />
+                {/* Profile Button */}
+                {/* <Button title="Profile" onPress={() => router.push('/tasks/Profile')} /> */}
+              </View>
+            ),
+            
+            headerRight: () => (
+              <Button title="Logout" onPress={() => router.push('/auth') } />
+            ),
+            headerShadowVisible:true
+          }}
+        />
+      </Stack>
     </View>
-  )
-}
+  );
+};
 
-export default _layout
+export default _layout;
 
 const styles = StyleSheet.create({
-  appContainer:{
-    flexDirection:'column',
-    justifyContent:'center',
-    minHeight:'100%',
-    minWidth:"100%"
-  }
-})
-
+  appContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    minHeight: '100%',
+    minWidth: '100%',
+  },
+  headerLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  profileImage: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginRight: 10,
+  },
+});

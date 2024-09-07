@@ -10,6 +10,7 @@ const TaskTabs = () => {
         <Tabs.Screen
         name='index'
         options={{
+            headerLeft: () => null,
             title:'All Tasks',
             tabBarIcon:({color, size})=>(
               <Ionicons name='list-circle' color={colors.primary} size={sizes.large}/>
@@ -37,6 +38,14 @@ const TaskTabs = () => {
         options={{
             title:'Archieved Tasks', tabBarIcon:({color, size})=>(
               <Ionicons name='archive' color={colors.primary} size={sizes.large}/>
+            )
+          }}
+          />
+        <Tabs.Screen
+        name='Profile'
+        options={{
+            title:'Profile', tabBarIcon:({color, size})=>(
+              <Ionicons name='person' color={colors.primary} size={sizes.large}/>
             )
           }}
           />
