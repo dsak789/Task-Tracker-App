@@ -12,7 +12,6 @@ const Login = () => {
       <ScrollView>
       {/* <Color color='#568233' /> */}
       <LoginForm/>
-      <Button title="Go to Tasks" onPress={() => router.push('/tasks')} />
       </ScrollView>
     </View>
   );
