@@ -9,6 +9,12 @@ import Loading from '../../components/Loading'
 const ArchievedTasks = () => {
 const [archivedTasks,setArchievedTasks] = useState([])
 const [fetching,setFetching] =useState(true)
+const [refreshing,setRefreshing] = useState(false)
+
+const handlerefres = () =>{
+  setRefreshing(true)
+  loadTasks()
+}
 const loadTasks = async ()=>{
   try {
     end=`${ApiEndPoints._base}/${ApiEndPoints.archieved_tasks}/dsak.official`
@@ -18,6 +24,7 @@ const loadTasks = async ()=>{
       setArchievedTasks(res.data.Tasks)
       // console.log("Archieved==>",archivedTasks)
       setFetching(false)
+      setRefreshing(false)
     }).catch((err)=>{
       console.log(err)
     })
@@ -28,11 +35,11 @@ const loadTasks = async ()=>{
 
 useEffect(()=>{
 loadTasks()
-const interval = setInterval(() => {
-  loadTasks()
-}, 10000) // Poll every 10 seconds
+// const interval = setInterval(() => {
+//   loadTasks()
+// }, 10000) 
 
-return () => clearInterval(interval) // Cleanup interval on component unmount
+// return () => clearInterval(interval) 
 }, [])
 
 
@@ -41,7 +48,8 @@ return () => clearInterval(interval) // Cleanup interval on component unmount
     <View>
         {/* <Color color='#eeee9e'/> */}
         {
-          fetching ? <Loading text = "Archieved Tasks" /> : <ShowTasks tasks = {archivedTasks}/>
+          fetching ? <Loading text = "Archieved Tasks" /> : 
+          <ShowTasks tasks={archivedTasks} refresh = {handlerefres} refreshState={refreshing}/>
         }
     </View>
   )

@@ -1,35 +1,66 @@
 import React, { useState, useEffect } from 'react';
-import { View, Button, Image, StyleSheet } from 'react-native';
+import { View, Alert, Image, StyleSheet, Pressable } from 'react-native';
 import { Stack } from 'expo-router';
 import { useRouter } from 'expo-router';
-import dp from '../assets/images/TaskTracker1024.png'
+import logo from '../assets/images/TaskTracker1024.png';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Ionicons } from '@expo/vector-icons';
+
 const _layout = () => {
   const router = useRouter();
-  const [isLoggedin,setIsloggedin] = useState(false)
-
-
-  loginCheck = async () =>{
+  const [isLoggedin, setIsloggedin] = useState(false);
+  const [dp, setDp] = useState('');
+  
+  const loginCheck = async () => {
     try {
-      res = await AsyncStorage.getItem("loginInfo")
-      setIsloggedin(JSON.parse(res)) 
-      if(isLoggedin.isLogin){
-        router.replace('/tasks')
+      let res = await AsyncStorage.getItem('loginInfo');
+      res = JSON.parse(res) || { isLogin: false };
+      setIsloggedin(res);
+      const dp_url = res.dpUrl
+      setDp(dp_url);
+      if (res.isLogin) {
+        router.replace('/tasks');
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
-  useEffect(()=>{
-    loginCheck()
-    const interval = setInterval(() => {
-      loginCheck()
-    }, 10000) // Poll every 10 seconds
-    
-    return () => clearInterval(interval) // Cleanup interval on component unmount
-    }, [])
-    
+  // Logout handler
+  const handleLogout = async () => {
+    Alert.alert(
+      
+      'Goto profile or Logout','',
+      [
+        {
+          text: 'Go to Profile',
+          onPress: () => router.push('/tasks/Profile'),
+        },
+        {
+          text: 'Logout',
+          onPress: async () => {
+            try {
+              await AsyncStorage.setItem('loginInfo', JSON.stringify({ isLogin: false }));
+              console.log('Logout');
+              router.replace('/auth');
+            } catch (error) {
+              console.log(error);
+            }
+          },
+          style: 'destructive', // Red button for logout
+        },
+        {
+          text: 'Cancel',
+          style: 'cancel', // Dismiss the alert
+        },
+      ],
+      { cancelable: true }
+    );
+  };
+
+  useEffect(() => {
+    loginCheck();
+  }, []);
 
   return (
     <View style={styles.appContainer}>
@@ -37,37 +68,30 @@ const _layout = () => {
         <Stack.Screen
           name="auth"
           options={{
-            title:"Authentication",
+            title: 'Authentication',
             headerShown: false,
           }}
         />
         <Stack.Screen
           name="tasks"
           options={{
-            title:'',
-            headerLeft: () => (     
+            title: '',
+            headerLeft: () => (
               <View style={styles.headerLeft}>
                 <Image
-                  source={dp} 
+                  source={logo}
                   style={styles.profileImage}
-                  onPress={()=> console.log("TaskTracker")}
+                  onPress={() => console.log('TaskTracker')}
                 />
-                {/* <Button title="Profile" onPress={() => router.push('/tasks/Profile')} /> */}
               </View>
             ),
-            
             headerRight: () => (
-                <View style={styles.headerLeft}>
-                    <Button title="Logout" onPress={ async() => {
-                      try {
-                        await AsyncStorage.setItem('loginInfo',JSON.stringify({'isLogin':false}))
-                        console.log("Logout")
-                        router.replace('/auth')
-                      } catch (error) {
-                       console.log(error) 
-                      }
-                    } } />
-                </View>
+              <View style={styles.headerLeft}>
+                <Pressable onPress={handleLogout} style={styles.logoutbtn}>
+                  <Ionicons name="log-out" size={35} color="#2776d7" />
+                  <Image source={{ uri: dp }} style={styles.profileImage} />
+                </Pressable>
+              </View>
             ),
           }}
         />
@@ -89,12 +113,16 @@ const styles = StyleSheet.create({
   headerLeft: {
     flexDirection: 'row',
     alignItems: 'center',
-    margin:15
+    margin: 5,
   },
   profileImage: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    marginRight: 10,
+    marginRight: 5,
+  },
+  logoutbtn: {
+    flexDirection: 'row-reverse',
+    alignItems:'center'
   },
 });

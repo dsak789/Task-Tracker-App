@@ -3,11 +3,18 @@ import React, { useState, useEffect } from 'react'
 import Color from '../../components/Color'
 import ShowTasks from '../../components/ShowTasks'
 import ApiEndPoints from '../../components/ApiEndPoints.json'
-import axios from 'axios'
 import Loading from '../../components/Loading'
+import axios from 'axios'
 const Home = () => {
 const [tasks,setTasks] = useState([])
 const [fetching,setFetching] =useState(true)
+const [refreshing,setRefreshing] = useState(false)
+const handlerefres = async() =>{
+  setRefreshing(true)
+  loadTasks()
+}
+
+
 const loadTasks = async ()=>{
   try {
     end=`${ApiEndPoints._base}/${ApiEndPoints.tasks}/dsak.official`
@@ -17,6 +24,8 @@ const loadTasks = async ()=>{
       setTasks(res.data.Tasks)
       // console.log("All Tasks==>",tasks)
       setFetching(false)
+      setRefreshing(false)
+      
     }).catch((err)=>{
       console.log(err)
     })
@@ -27,11 +36,11 @@ const loadTasks = async ()=>{
 
 useEffect(()=>{
 loadTasks()
-const interval = setInterval(() => {
-  loadTasks()
-}, 10000) // Poll every 10 seconds
+// const interval = setInterval(() => {
+//   loadTasks()
+// }, 10000) // Poll every 10 seconds
 
-return () => clearInterval(interval) // Cleanup interval on component unmount
+// return () => clearInterval(interval) // Cleanup interval on component unmount
 }, [])
 
   return (
@@ -40,7 +49,7 @@ return () => clearInterval(interval) // Cleanup interval on component unmount
       {fetching?
         <Loading text="Tasks"/>
       :
-        <ShowTasks tasks={tasks}/>
+        <ShowTasks tasks={tasks} refresh = {handlerefres} refreshState={refreshing}/>
       }
     </View>
   )

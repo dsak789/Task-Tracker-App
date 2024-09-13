@@ -1,10 +1,33 @@
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
-import React from 'react';
+import { View, Text, ScrollView,FlatList, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
 
 const ShowTasks = (props) => {
+  const [refreshing,setRefreshing] = useState(false)
   return (
     <View style={styles.ShowTasksContainer}>
-      <ScrollView>
+      <FlatList 
+      data={props.tasks}
+      renderItem={({item})=>{
+        return(
+          <View key={item._id} style={styles.taskContainer}>
+              <View style={styles.taskInfo}>
+                <Text style={styles.taskTitle}>{item.title}</Text>
+                <Text>{item.description}</Text>
+              </View>
+              <View style={styles.taskStatus}>
+                <Text>{item.status}</Text>
+                <Text>Update Status</Text>
+              </View>
+            </View>
+        )
+
+      }}
+      keyExtractor={(item)=>{return item._id}}
+      refreshing={props.refreshState}
+      onRefresh={props.refresh}
+      
+      />
+      {/* <ScrollView>
         {props.tasks && props.tasks.length > 0 ? (
           props.tasks.map((task) => (
             <View key={task._id} style={styles.taskContainer}>
@@ -23,7 +46,7 @@ const ShowTasks = (props) => {
             <Text style={styles.noTasksText}>No tasks available</Text>
           </View>
         )}
-      </ScrollView>
+      </ScrollView> */}
     </View>
   );
 };
@@ -32,14 +55,14 @@ export default ShowTasks;
 
 const styles = StyleSheet.create({
   ShowTasksContainer: {
-    height: '100%',
+    minHeight: '100%',
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
     borderRadius: 12,
-    margin: 10,
-    padding: 20,
-    paddingBottom: 100,
+    margin: 0,
+    padding: 5,
+    paddingBottom: 20,
   },
   taskContainer: {
     flex: 1,
@@ -49,7 +72,7 @@ const styles = StyleSheet.create({
     minHeight: 200,
     height: '50%',
     backgroundColor: '#466763',
-    margin: 2,
+    margin: 5,
     borderRadius: 5,
   },
   taskInfo: {

@@ -2,7 +2,7 @@
   "expo": {
     "name": "TaskTracker",
     "slug": "TaskTracker",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/images/TaskTracker48.png",
     "scheme": "myapp",

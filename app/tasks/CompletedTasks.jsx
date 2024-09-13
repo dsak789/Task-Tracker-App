@@ -9,6 +9,12 @@ import Loading from '../../components/Loading'
 const CompletedTasks = () => {
   const [completedTasks,setCompletedTasks] = useState([])
   const [fetching,setFetching] =useState(true)
+  const [refreshing,setRefreshing] = useState(false)
+
+  const handlerefres = () =>{
+    setRefreshing(true)
+    loadTasks()
+  }
   
   const loadTasks = async ()=>{
     try {
@@ -19,6 +25,7 @@ const CompletedTasks = () => {
         setCompletedTasks(res.data.Tasks)
         // console.log("Completed==>",completedTasks)
         setFetching(false)
+        setRefreshing(false)
       }).catch((err)=>{
         console.log(err)
       })
@@ -38,7 +45,9 @@ const CompletedTasks = () => {
     <View>
       {/* <Color color="#225864"/> */}
       {
-        fetching ? <Loading text="Completed Tasks"/> : <ShowTasks tasks={completedTasks}/> 
+        fetching ? 
+        <Loading text="Completed Tasks"/> : 
+        <ShowTasks tasks={completedTasks} refresh = {handlerefres} refreshState={refreshing}/> 
         }
     </View>
   )

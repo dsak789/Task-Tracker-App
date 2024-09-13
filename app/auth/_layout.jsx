@@ -5,7 +5,6 @@ import {colors,sizes } from '../../assets/theme/styles.json'
 const AuthenticationTabs = () => {
 
     return (
-      // <View>
         <Tabs>
           <Tabs.Screen
           name='Login'
@@ -13,7 +12,8 @@ const AuthenticationTabs = () => {
             title:'Login',
             tabBarIcon:()=>(
               <Ionicons name='log-in' color={colors.primary} size={sizes.large}/>
-            )
+            ),
+            // headerShown:false
             }}
             />
           <Tabs.Screen
@@ -25,7 +25,6 @@ const AuthenticationTabs = () => {
               }}
               />
         </Tabs>
-      // </View>
     )
   }
 
