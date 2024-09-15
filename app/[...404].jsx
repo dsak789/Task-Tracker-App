@@ -1,17 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from 'react'; 
 import { View, Text, ImageBackground, Pressable, StyleSheet } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useRouter, useNavigation } from 'expo-router';
 const bg = require('../assets/images/TaskTrackersplash-1284-2778.png');
 
 const NotFound = () => {
   const router = useRouter();
+  const navigation = useNavigation();
+
   useEffect(() => {
+    navigation.setOptions({ headerShown: false }); // Hide the header
+
     const timer = setTimeout(() => {
       router.push('/auth');
-    }, 3); 
+    }, 30); 
 
-    return () => clearTimeout(timer); 
-  }, [router]);
+    return () => clearTimeout(timer);
+  }, [router, navigation]);
 
   return (
     <Pressable style={styles.container} onPress={() => router.push('/auth')}>

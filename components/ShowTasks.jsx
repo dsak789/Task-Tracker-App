@@ -1,5 +1,6 @@
 import { View, Text, ScrollView,FlatList, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
+import Dropdown from './Dropdown';
 
 const ShowTasks = (props) => {
   const [refreshing,setRefreshing] = useState(false)
@@ -16,7 +17,7 @@ const ShowTasks = (props) => {
               </View>
               <View style={styles.taskStatus}>
                 <Text>{item.status}</Text>
-                <Text>Update Status</Text>
+                <Dropdown/>                
               </View>
             </View>
         )

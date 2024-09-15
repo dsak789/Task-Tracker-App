@@ -1,11 +1,13 @@
-import { View, Text } from 'react-native'
+import { ScrollView, Text } from 'react-native'
 import React from 'react'
 import Color from '../../components/Color'
+import Dropdown from '../../components/Dropdown'
 const AddTask = () => {
   return (
-    <View>
-      <Color color="#546866"/>
-    </View>
+    <ScrollView>
+      {/* <Color color="#546866"/> */}
+      <Dropdown/>
+    </ScrollView>
   )
 }
 

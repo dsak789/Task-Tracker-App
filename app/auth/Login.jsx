@@ -10,7 +10,7 @@ const Login = () => {
   
   return (
     <View style={styles.loginContainer}>
-      <ScrollView contentContainerStyle={styles.loginContainer}>
+      <ScrollView contentContainerStyle={styles.loginContainer} keyboardDismissMode='on-drag'>
       {/* <Color color='#568233' /> */}
       <LoginForm/>
       {/* <PushNotification /> */}
