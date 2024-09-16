@@ -1,5 +1,6 @@
 import { View, Text } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect,useContext } from 'react'
+import {userInfo} from './_layout'
 import Color from '../../components/Color'
 import ShowTasks from '../../components/ShowTasks'
 import ApiEndPoints from '../../components/ApiEndPoints.json'
@@ -7,6 +8,7 @@ import axios from 'axios'
 import Loading from '../../components/Loading'
 
 const CompletedTasks = () => {
+  const userData = useContext(userInfo)
   const [completedTasks,setCompletedTasks] = useState([])
   const [fetching,setFetching] =useState(true)
   const [refreshing,setRefreshing] = useState(false)
@@ -18,7 +20,7 @@ const CompletedTasks = () => {
   
   const loadTasks = async ()=>{
     try {
-      end=`${ApiEndPoints._base}/${ApiEndPoints.completed_tasks}/dsak.official`
+      end=`${ApiEndPoints._base}/${ApiEndPoints.completed_tasks}/${userData?.username}`
       // console.log(end)
       await axios.get(end)
       .then((res)=>{

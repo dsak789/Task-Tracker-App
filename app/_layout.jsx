@@ -15,8 +15,9 @@ const _layout = () => {
     try {
       let res = await AsyncStorage.getItem('loginInfo');
       res = JSON.parse(res) || { isLogin: false };
-      setIsloggedin(res);
-      const dp_url = res.dpUrl
+      setIsloggedin(res.isLogin);
+      console.log("Asynch==>",res)
+      const dp_url = res.dpUrl || ''
       setDp(dp_url);
       if (res.isLogin) {
         router.replace('/tasks');
@@ -30,18 +31,15 @@ const _layout = () => {
   const handleLogout = async () => {
     Alert.alert(
       
-      'Goto profile or Logout','',
+      'Logout!','Sure want to logout...?',
       [
-        {
-          text: 'Go to Profile',
-          onPress: () => router.push('/tasks/Profile'),
-        },
         {
           text: 'Logout',
           onPress: async () => {
             try {
               await AsyncStorage.setItem('loginInfo', JSON.stringify({ isLogin: false }));
-              console.log('Logout');
+              console.log('Logged Out');
+              setIsloggedin(false)
               router.replace('/auth');
             } catch (error) {
               console.log(error);
@@ -50,7 +48,7 @@ const _layout = () => {
           style: 'destructive', // Red button for logout
         },
         {
-          text: 'Cancel',
+          text: 'Stay',
           style: 'cancel', // Dismiss the alert
         },
       ],
@@ -60,7 +58,7 @@ const _layout = () => {
 
   useEffect(() => {
     loginCheck();
-  }, []);
+  }, [dp,setDp]);
 
   return (
     <View style={styles.appContainer}>
@@ -89,11 +87,13 @@ const _layout = () => {
               <View style={styles.headerLeft}>
                 <Pressable onPress={handleLogout} style={styles.logoutbtn}>
                   <Ionicons name="log-out" size={35} color="#2776d7" />
-                  <Image source={{ uri: dp }} style={styles.profileImage} />
+                  {dp !='' && <Image source={{ uri: dp }} style={styles.profileImage} />}
                 </Pressable>
               </View>
             ),
+            
           }}
+          initialParams={{ dp_url: dp }}
         />
       </Stack>
     </View>
