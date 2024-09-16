@@ -39,7 +39,6 @@ const _layout = () => {
             try {
               await AsyncStorage.setItem('loginInfo', JSON.stringify({ isLogin: false }));
               console.log('Logged Out');
-              // setDp('');
               setIsloggedin(false)
               router.replace('/auth');
             } catch (error) {

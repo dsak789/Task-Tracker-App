@@ -1,13 +1,33 @@
-import React, { useState } from 'react'
+import React, { useState,createContext, useEffect } from 'react'
 import { Tabs,useLocalSearchParams } from 'expo-router'
 import { Ionicons } from '@expo/vector-icons'
 import {colors,sizes } from '../../assets/theme/styles.json'
 import { View, Image, StyleSheet } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+export const userInfo = createContext()
+
 const TaskTabs = () => {
+  const [userData,setUserData] = useState();
+  const [dp,setDP] = useState();
+  const getInfo = async() =>{
+    try {
+      let res = await AsyncStorage.getItem('loginInfo');
+      res = JSON.parse(res) || { isLogin: false };
+      setUserData(res);
+      console.log("tasks/Layout==>",res)
+      const dp_url = res.dpUrl || ''
+      setDP(dp_url);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   const { dp_url } = useLocalSearchParams();
-  console.log("DP",dp_url)
+  console.log("DP==>",dp_url)
+  useEffect(()=>{
+    getInfo()
+  },[])
    return (
-    
+    <userInfo.Provider value={userData}>  
     <Tabs >
         <Tabs.Screen
         name='index'
@@ -57,6 +77,8 @@ const TaskTabs = () => {
           />
         
     </Tabs>  
+    
+  </userInfo.Provider>
   )
 }
 

@@ -1,23 +1,71 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
+import ApiEndPoints from './ApiEndPoints.json' 
+import axios from 'axios';
+const Dropdown = (props) => {
+  const [selectedValue, setSelectedValue] = useState(props.task.status);
 
-const Dropdown = () => {
-  const [selectedValue, setSelectedValue] = useState(null);
+  const updateTask = (taskId, updateStatus) => {
+    if (updateStatus !== undefined && updateStatus !== null) {
+      axios
+        .get(`${ApiEndPoints._base}/task/updatetask/${taskId}/${updateStatus}`)
+        .then((res) => {
+          console.log(res.data.message);
+          setSelectedValue(updateStatus); // Update state here
+        })
+        .catch((err) => console.log(err));
+    }
+    else{
+      // alert('Nothing..')
+    }
+  };
+  
+
+
+
+  const statusUpdaterFuncs= {
+    'Todo':[
+          { label: 'In Progress', value: 'In Progress' },
+          { label: 'Completed', value: "Completed" },
+          { label: 'Archieve', value: "Archieve" },
+          // { label: 'Delete', value: "Delete" },
+        ],
+    'In Progress':[
+          { label: 'Todo', value: "Todo" },
+          { label: 'Completed', value: "Completed" },
+          { label: 'Archieve', value: "Archieve" },
+          // { label: 'Delete', value: "Delete"},
+        ],
+    'Completed':[
+          { label: 'Todo', value: "Todo"},
+          { label: 'In Progress', value: "In Progress" },
+          { label: 'Archieve', value: "Archieve" },
+          // { label: 'Delete', value: "Delete" },
+        ],
+    'Archieve':[
+          { label: 'Todo', value: "Todo" },
+          { label: 'In Progress', value: "In Progress" },
+          { label: 'Completed', value: "Completed" },
+          // { label: 'Delete', value: "Delete" },
+        ],
+  }
+
+
+  const handleValueChange = (value)=>{
+    updateTask(props.task.id,value)
+    console.log("Con",value,props.task.id)
+  }
+
 
   return (
     <View style={styles.container}>
       <RNPickerSelect
-        onValueChange={(value) => setSelectedValue(value)}
-        items={[
-          { label: 'Todo', value: ()=>console.log("Todo") },
-          { label: 'In Progress', value: ()=>console.log("In Progress") },
-          { label: 'Completed', value: ()=>console.log("Completed") },
-          { label: 'Archived', value: ()=>console.log("Archieved") },
-          { label: 'Delete', value: ()=>console.log("Delete") },
-        ]}
+        onValueChange={handleValueChange}
+        items={statusUpdaterFuncs[props.task.status]}
         style={pickerSelectStyles}
-        placeholder={{ label: 'Update Status', value: null }}
+        placeholder={{ label: 'Update Status', value:null}}
+        value={selectedValue}
       />
     </View>
   );

@@ -17,37 +17,22 @@ const ShowTasks = (props) => {
               </View>
               <View style={styles.taskStatus}>
                 <Text>{item.status}</Text>
-                <Dropdown/>                
+                <Dropdown task={item}/>                
               </View>
             </View>
         )
 
       }}
       keyExtractor={(item)=>{return item._id}}
+      ListEmptyComponent={() => (
+        <View style={styles.noTasksContainer}>
+          <Text style={styles.noTasksText}>No Tasks to display</Text>
+        </View>
+      )}
       refreshing={props.refreshState}
       onRefresh={props.refresh}
       
       />
-      {/* <ScrollView>
-        {props.tasks && props.tasks.length > 0 ? (
-          props.tasks.map((task) => (
-            <View key={task._id} style={styles.taskContainer}>
-              <View style={styles.taskInfo}>
-                <Text style={styles.taskTitle}>{task.title}</Text>
-                <Text>{task.description}</Text>
-              </View>
-              <View style={styles.taskStatus}>
-                <Text>{task.status}</Text>
-                <Text>Update Status</Text>
-              </View>
-            </View>
-          ))
-        ) : (
-          <View style={styles.noTasksContainer}>
-            <Text style={styles.noTasksText}>No tasks available</Text>
-          </View>
-        )}
-      </ScrollView> */}
     </View>
   );
 };
@@ -72,7 +57,7 @@ const styles = StyleSheet.create({
     minWidth: '95%',
     minHeight: 200,
     height: '50%',
-    backgroundColor: '#466763',
+    backgroundColor: '#4667633d',
     margin: 5,
     borderRadius: 5,
   },
@@ -94,11 +79,13 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   noTasksText: {
-    fontSize: 16,
-    color: '#888',
+    fontSize: 20,
+    color: '#6f6b6b',
   },
   taskTitle: {
     fontWeight: 'bold',
     fontSize: 18,
   },
+ 
+  
 });
