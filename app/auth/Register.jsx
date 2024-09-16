@@ -8,7 +8,7 @@ const Register = () => {
   return (
     <ScrollView contentContainerStyle={styles.registerContainer}>
       <RegisterForm />
-      <Button title="Go to Tasks" onPress={() => router.push('/tasks')} />
+      {/* <Button title="Go to Tasks" onPress={() => router.push('/tasks')} /> */}
       {/* <Color color='#098743'/> */}
     </ScrollView>
   )

@@ -29,32 +29,32 @@ const Dropdown = (props) => {
           { label: 'In Progress', value: 'In Progress' },
           { label: 'Completed', value: "Completed" },
           { label: 'Archieve', value: "Archieve" },
-          // { label: 'Delete', value: "Delete" },
+          { label: 'Delete', value: "Delete" },
         ],
     'In Progress':[
           { label: 'Todo', value: "Todo" },
           { label: 'Completed', value: "Completed" },
           { label: 'Archieve', value: "Archieve" },
-          // { label: 'Delete', value: "Delete"},
+          { label: 'Delete', value: "Delete"},
         ],
     'Completed':[
           { label: 'Todo', value: "Todo"},
           { label: 'In Progress', value: "In Progress" },
           { label: 'Archieve', value: "Archieve" },
-          // { label: 'Delete', value: "Delete" },
+          { label: 'Delete', value: "Delete" },
         ],
     'Archieve':[
           { label: 'Todo', value: "Todo" },
           { label: 'In Progress', value: "In Progress" },
           { label: 'Completed', value: "Completed" },
-          // { label: 'Delete', value: "Delete" },
+          { label: 'Delete', value: "Delete" },
         ],
   }
 
 
   const handleValueChange = (value)=>{
     updateTask(props.task.id,value)
-    console.log("Con",value,props.task.id)
+    // console.log("Con",value,props.task.id)
   }
 
 
@@ -64,7 +64,7 @@ const Dropdown = (props) => {
         onValueChange={handleValueChange}
         items={statusUpdaterFuncs[props.task.status]}
         style={pickerSelectStyles}
-        placeholder={{ label: 'Update Status', value:null}}
+        placeholder={{ label: 'Update Status'}}
         value={selectedValue}
       />
     </View>

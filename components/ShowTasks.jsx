@@ -17,7 +17,7 @@ const ShowTasks = (props) => {
               </View>
               <View style={styles.taskStatus}>
                 <Text>{item.status}</Text>
-                <Dropdown task={item}/>                
+                {item.status != 'Completed'?<Dropdown task={item}/>:<></>}                
               </View>
             </View>
         )

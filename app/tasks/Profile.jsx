@@ -21,10 +21,10 @@ const Profile = () => {
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
-        <Text style={styles.greetingText}>Hello..! {userData.name}</Text>
-        <Image source={{ uri: userData.dpUrl }} style={styles.profileImage} />
-        <Text style={styles.infoText}>Username: {userData.username}</Text>
-        <Text style={styles.infoText}>GitHub Id: {userData.githubid}</Text>
+        <Text style={styles.greetingText}>Hello..! {userData?.name}</Text>
+        <Image source={{ uri: userData?.dpUrl }} style={styles.profileImage} />
+        <Text style={styles.infoText}>Username: {userData?.username}</Text>
+        <Text style={styles.infoText}>GitHub Id: {userData?.githubid}</Text>
         <Button title='Logout'onPress={logout}/>
       </View>
     </ScrollView>

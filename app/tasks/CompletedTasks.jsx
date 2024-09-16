@@ -20,7 +20,7 @@ const CompletedTasks = () => {
   
   const loadTasks = async ()=>{
     try {
-      end=`${ApiEndPoints._base}/${ApiEndPoints.completed_tasks}/${userData.username}`
+      end=`${ApiEndPoints._base}/${ApiEndPoints.completed_tasks}/${userData?.username}`
       // console.log(end)
       await axios.get(end)
       .then((res)=>{

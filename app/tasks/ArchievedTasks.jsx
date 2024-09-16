@@ -19,7 +19,7 @@ const handlerefres = () =>{
 }
 const loadTasks = async ()=>{
   try {
-    end=`${ApiEndPoints._base}/${ApiEndPoints.archieved_tasks}/${userData.username}`
+    end=`${ApiEndPoints._base}/${ApiEndPoints.archieved_tasks}/${userData?.username}`
     console.log(end)
     await axios.get(end)
     .then((res)=>{

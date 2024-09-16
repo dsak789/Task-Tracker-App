@@ -14,7 +14,7 @@ const TaskTabs = () => {
       let res = await AsyncStorage.getItem('loginInfo');
       res = JSON.parse(res) || { isLogin: false };
       setUserData(res);
-      console.log("tasks/Layout==>",res)
+      // console.log("tasks/Layout==>",res)
       const dp_url = res.dpUrl || ''
       setDP(dp_url);
     } catch (error) {
@@ -22,7 +22,7 @@ const TaskTabs = () => {
     }
   }
   const { dp_url } = useLocalSearchParams();
-  console.log("DP==>",dp_url)
+  // console.log("DP==>",dp_url)
   useEffect(()=>{
     getInfo()
   },[])
@@ -35,7 +35,7 @@ const TaskTabs = () => {
             headerLeft: () => null,
             title:'All Tasks',
             tabBarIcon:({color, size})=>(
-              <Ionicons name='list-circle' color={colors.primary} size={sizes.large}/>
+              <Ionicons name='list-circle' color={colors.primary} size={sizes.medium}/>
             )
           }}
           />
@@ -43,7 +43,7 @@ const TaskTabs = () => {
         name='CompletedTasks'
         options={{
             title:'Completed Tasks', tabBarIcon:({color, size})=>(
-              <Ionicons name='checkmark-done-circle' color={colors.primary} size={sizes.large}/>
+              <Ionicons name='checkmark-done-circle' color={colors.primary} size={sizes.medium}/>
             )
           }}
           />
@@ -51,7 +51,7 @@ const TaskTabs = () => {
         name='AddTask'
         options={{
             title:'Add Task', tabBarIcon:({color, size})=>(
-              <Ionicons name='add-circle' color={colors.primary} size={sizes.large}/>
+              <Ionicons name='add-circle' color={colors.primary} size={sizes.medium}/>
             )
           }}
           />
@@ -59,7 +59,7 @@ const TaskTabs = () => {
         name='ArchievedTasks'
         options={{
             title:'Archieved Tasks', tabBarIcon:({color, size})=>(
-              <Ionicons name='archive' color={colors.primary} size={sizes.large}/>
+              <Ionicons name='archive' color={colors.primary} size={sizes.medium}/>
             )
           }}
           />
@@ -68,9 +68,9 @@ const TaskTabs = () => {
         options={{
             title:'', tabBarIcon:({color, size})=>(
               <View>
-                {dp_url ? 
+                {dp_url !='' ? 
                 <Image source={{ uri: dp_url }} style={styles.profileImage}/> :
-                <Ionicons name='person' color={colors.primary} size={sizes.large}/>}
+                <Ionicons name='person' color={colors.primary} size={sizes.medium}/>}
               </View>
             )
           }}
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 50,
-    marginTop:15,
+    marginTop:20,
     alignItems:'center'
   }
 })

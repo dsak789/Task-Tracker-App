@@ -9,7 +9,7 @@ const RegisterForm = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>This Page is Not Yet Developed</Text>
+      <Text style={styles.heading}>Register Screen is Not Yet Developed</Text>
       <Text style={styles.heading}>Kindly Use Web-version</Text>
       <Button title="Open TaskTracker in Browser" onPress={handlePress} />
     </View>

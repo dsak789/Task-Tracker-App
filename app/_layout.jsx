@@ -87,7 +87,7 @@ const _layout = () => {
               <View style={styles.headerLeft}>
                 <Pressable onPress={handleLogout} style={styles.logoutbtn}>
                   <Ionicons name="log-out" size={35} color="#2776d7" />
-                  <Image source={{ uri: dp }} style={styles.profileImage} />
+                  {dp !='' && <Image source={{ uri: dp }} style={styles.profileImage} />}
                 </Pressable>
               </View>
             ),
