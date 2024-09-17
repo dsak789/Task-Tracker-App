@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const Profile = () => {
   const router = useRouter();
   const userData = useContext(userInfo);
-  console.log('tasks/Profile==>', userData);
+  // console.log('tasks/Profile==>', userData);
   const logout = async () => {
     try {
       await AsyncStorage.setItem('loginInfo', JSON.stringify({ isLogin: false }));

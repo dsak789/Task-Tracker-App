@@ -11,7 +11,8 @@ const Dropdown = (props) => {
       axios
         .get(`${ApiEndPoints._base}/task/updatetask/${taskId}/${updateStatus}`)
         .then((res) => {
-          console.log(res.data.message);
+          alert("Please Pull to refresh")
+          // console.log(res.data.message);
           setSelectedValue(updateStatus); // Update state here
         })
         .catch((err) => console.log(err));
@@ -81,13 +82,9 @@ const styles = StyleSheet.create({
 
 const pickerSelectStyles = StyleSheet.create({
   inputAndroid: {
-    fontSize: 16,
-    width:250,
-    borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 4,
-    color: 'black',
-    paddingRight: 30, // to ensure the text is never behind the icon
+    width:150,
+    backgroundColor:"#948a8a94",
+    margin:10,
   },
 });
 

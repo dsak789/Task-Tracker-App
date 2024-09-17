@@ -11,7 +11,7 @@ const NotFound = () => {
     navigation.setOptions({ headerShown: false }); // Hide the header
 
     const timer = setTimeout(() => {
-      router.push('/auth');
+      router.replace('/auth');
     }, 30); 
 
     return () => clearTimeout(timer);

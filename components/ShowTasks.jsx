@@ -3,7 +3,12 @@ import React, { useState } from 'react';
 import Dropdown from './Dropdown';
 
 const ShowTasks = (props) => {
-  const [refreshing,setRefreshing] = useState(false)
+  const taskStatusColors = {
+    'Completed':'green',
+    'Todo':'blue',
+    'Archieve':'#545412e1',
+    'In Progress':'orange'
+  }
   return (
     <View style={styles.ShowTasksContainer}>
       <FlatList 
@@ -13,11 +18,11 @@ const ShowTasks = (props) => {
           <View key={item._id} style={styles.taskContainer}>
               <View style={styles.taskInfo}>
                 <Text style={styles.taskTitle}>{item.title}</Text>
-                <Text>{item.description}</Text>
+                <Text style={styles.taskDescription}>:~{item.description}</Text>
               </View>
-              <View style={styles.taskStatus}>
-                <Text>{item.status}</Text>
-                {item.status != 'Completed'?<Dropdown task={item}/>:<></>}                
+              <View style={styles.taskStatusBox}>
+                <Text style={[styles.taskStatus,{color:taskStatusColors[item.status]}]}>{item.status}</Text>
+                {item.status != 'Completed'? <Dropdown task={item}/>:<></>}                
               </View>
             </View>
         )
@@ -64,13 +69,22 @@ const styles = StyleSheet.create({
   taskInfo: {
     flexDirection: 'column',
     justifyContent: 'space-around',
+    
     gap: 10,
     padding: 20,
   },
-  taskStatus: {
+  taskStatusBox: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    gap: 10,
+    alignItems:'center',
+    margin:15,
+    borderRadius:12,
+    // gap: 5,
+  },
+  taskStatus:{
+    fontSize:20,
+    fontWeight:'bold',
+    color:'#545412e1'
   },
   noTasksContainer: {
     flex: 1,
@@ -85,6 +99,10 @@ const styles = StyleSheet.create({
   taskTitle: {
     fontWeight: 'bold',
     fontSize: 18,
+  },
+  taskDescription: {
+    marginTop:10,
+    fontSize: 16,
   },
  
   
