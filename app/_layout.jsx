@@ -16,7 +16,7 @@ const _layout = () => {
       let res = await AsyncStorage.getItem('loginInfo');
       res = JSON.parse(res) || { isLogin: false };
       setIsloggedin(res.isLogin);
-      console.log("Asynch==>",res)
+      // console.log("Asynch==>",res)
       const dp_url = res.dpUrl || ''
       setDp(dp_url);
       if (res.isLogin) {
@@ -38,7 +38,7 @@ const _layout = () => {
           onPress: async () => {
             try {
               await AsyncStorage.setItem('loginInfo', JSON.stringify({ isLogin: false }));
-              console.log('Logged Out');
+              // console.log('Logged Out');
               setIsloggedin(false)
               router.replace('/auth');
             } catch (error) {

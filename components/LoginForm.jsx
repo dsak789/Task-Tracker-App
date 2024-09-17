@@ -59,8 +59,8 @@ const LoginForm = () => {
                         'username':user.username,
                         'dpUrl': dpurl
                     }
-                    console.log(info)
-                    console.log(user)
+                    // console.log(info)
+                    // console.log(user)
                     await storage_handle(info)
 
                     router.replace('/tasks')

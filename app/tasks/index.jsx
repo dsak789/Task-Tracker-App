@@ -24,10 +24,12 @@ const loadTasks = async ()=>{
     const end=`${ApiEndPoints._base}/${ApiEndPoints.tasks}/${userData?.username}`
     const res = await axios.get(end)
     setTasks(res.data.Tasks)
-    setFetching(false)
-    setRefreshing(false)
   } catch (error) {
     console.log(error)
+  }
+  finally{
+    setFetching(false)
+    setRefreshing(false)
   }
 }
 
