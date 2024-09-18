@@ -1,7 +1,7 @@
 {
   "name": "tasktracker",
   "main": "expo-router/entry",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "scripts": {
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
@@ -17,9 +17,10 @@
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
     "@react-native-async-storage/async-storage": "1.23.1",
-    "@react-native-picker/picker": "^2.8.0",
+    "@react-native-picker/picker": "2.7.5",
     "@react-navigation/native": "^6.0.2",
     "axios": "^1.7.7",
+    "bcryptjs": "^2.4.3",
     "expo": "~51.0.28",
     "expo-constants": "~16.0.2",
     "expo-font": "~12.0.9",

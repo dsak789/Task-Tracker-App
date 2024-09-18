@@ -47,7 +47,7 @@ loadTasks()
       {fetching?
         <Loading text="Tasks to be Completed"/>
       :
-        <ShowTasks tasks={tasks} refresh = {handlerefres} refreshState={refreshing}/>
+        <ShowTasks tasks={tasks} refresh = {handlerefres} refreshState={refreshing} reload={loadTasks}/>
       }
     </View>
   )

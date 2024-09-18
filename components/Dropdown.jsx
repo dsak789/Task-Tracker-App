@@ -11,9 +11,10 @@ const Dropdown = (props) => {
       axios
         .get(`${ApiEndPoints._base}/task/updatetask/${taskId}/${updateStatus}`)
         .then((res) => {
-          alert("Please Pull to refresh")
+          // alert("Please Pull to refresh")
           // console.log(res.data.message);
-          setSelectedValue(updateStatus); // Update state here
+          props.refresh()
+          setSelectedValue(updateStatus); 
         })
         .catch((err) => console.log(err));
     }

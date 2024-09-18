@@ -66,12 +66,13 @@ const TaskTabs = () => {
         <Tabs.Screen
         name='Profile'
         options={{
-            title:'Profile', tabBarIcon:({color, size})=>(
+            title:'',
+            tabBarIcon:({color, size})=>(
               <View>
-                {/* {dp_url !='' ? */}
-                {/* <Image source={{ uri: dp_url }} style={styles.profileImage}/> :  */}
+                {(dp_url && dp_url !='') ?
+                <Image source={{ uri: dp_url }} style={styles.profileImage}/> :  
                 <Ionicons name='person' color={colors.primary} size={sizes.medium}/>
-                {/* }  */}
+                }
               </View>
             )
           }}
