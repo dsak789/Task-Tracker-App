@@ -1,7 +1,9 @@
 {
     "_base":"https://tasktrackerapinv2.vercel.app",
     "login":"user/login",
-    "register":"user/register",
+    "register":"user/adduser",
+    "change_password":"user/changepassword",
+    "forgot_password":"user/forgotpassword",
     "tasks":"task/tasks",
     "completed_tasks":"task/completed-tasks",
     "archieved_tasks":"task/archieved-tasks",

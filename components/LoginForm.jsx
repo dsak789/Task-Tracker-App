@@ -1,27 +1,20 @@
-import { KeyboardAvoidingView,View, Text,TextInput, Button,Image, ScrollView, StyleSheet } from 'react-native'
+import { View, Text,TextInput, Button,Image,TouchableOpacity, ScrollView, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import ApiEndPoints from '../components/ApiEndPoints.json'
 import { useRouter } from 'expo-router'
 import Loading from '../components/Loading'
+import ForgotPassword from './ForgotPassword'
 const image = require('../assets/images/TaskTracker1024.png')
 const LoginForm = () => {
     const router = useRouter()
     const [username,setUsername]= useState("")
     const [password,setPassword]= useState("")
     const [error,setError] = useState({})
+    const [showInput, setShowInput] = useState(false); 
     const [loading,setloading] = useState(false)
 
-
-    const validateInput =() =>{
-        let errors = {}
-        if(!username) errors.username = "Username Required"
-        if(!password) errors.password = "Password Required"
-        setError(errors)
-        return Object.keys(errors).length === 0
-
-    }
 
     const storage_handle = async(info) =>{
         try {
@@ -33,7 +26,14 @@ const LoginForm = () => {
 
     const  login_handle = async () => {
 
-        validateInput()
+        if(!username || !password){
+            let errors = {}
+            if(!username) errors.username = "Username Required"
+            if(!password) errors.password = "Password Required"
+            setError(errors)
+            return false
+        }
+
         try {
             setloading(true)
             const res = await axios.post(`${ApiEndPoints._base}/${ApiEndPoints.login}`,
@@ -73,13 +73,18 @@ const LoginForm = () => {
                 }
         } catch (error) {
             setloading(false)
-            console.log(error)
-            error = {'login': 'Invalid Credentials'}
-            // setError(error)
+            if(error.response.data.status==404){
+                error = {'login': 'Your Github '+error.response.data.message+'! Please Register again with valid Details '}
+                setError(error)
+            }else{
+                error = {'login': error.response.data.message}
+                setError(error)
+            }
+            // console.log("2==",error.response.data)
         }
     }
   return (
-    <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={150} style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
         {!loading ? 
         <View style={styles.loginFormContainer}>
             <Image source={image} style={styles.image} />
@@ -99,9 +104,14 @@ const LoginForm = () => {
                 />
                 {error.password !="" && <Text style={styles.error}>{error.password}</Text>}
             <Button title='Login' onPress={login_handle}/> 
-
-        </View> :<Loading text="Login Process"/>}
-    </KeyboardAvoidingView>
+            {!showInput && (
+                <TouchableOpacity style={styles.button} onPress={()=>setShowInput(true)}>
+                <Text style={styles.buttonText}>Forgot Password..?</Text>
+                </TouchableOpacity>
+            )}
+            {showInput && <ForgotPassword show={setShowInput}/>}
+        </View> : <Loading text="Login Process"/>}
+    </ScrollView>
   )
 }
 
@@ -116,17 +126,17 @@ const styles = StyleSheet.create({
 
     },
     loginFormContainer: {
-    backgroundColor:'#ffffff',
-    padding:20,
-    borderRadius:20,
-    shadowColor:'#000000',
-    shadowOffset:{
-        width:0,
-        height:2,
-    },
-    shadowOpacity:0.25,
-    shadowRadius:1,
-    elevation:7
+        backgroundColor:'#ffffff',
+        padding:20,
+        borderRadius:20,
+        shadowColor:'#000000',
+        shadowOffset:{
+            width:0,
+            height:2,
+        },
+        shadowOpacity:0.25,
+        shadowRadius:1,
+        elevation:7
     },
     input: {
         height:40,
@@ -153,6 +163,20 @@ const styles = StyleSheet.create({
         width:150,
         alignSelf:'center',
         // marginBottom:50
-    }
+    },
+    button: {
+        // backgroundColor: '#abafb3',
+        paddingVertical: 10,
+        // paddingHorizontal: 20,
+        // borderRadius: 8,
+        alignItems: 'center',
+        width: '100%',
+        marginTop:10
+      },
+      buttonText: {
+        color: '#ae0d0d',
+        fontSize: 16,
+        fontWeight: 'bold',
+      },
   });
   

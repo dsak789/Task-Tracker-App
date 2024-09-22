@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
 const pickerSelectStyles = StyleSheet.create({
   inputAndroid: {
     width:150,
-    backgroundColor:"#948a8a94",
+    backgroundColor:"#00000063",
     margin:10,
   },
 });
