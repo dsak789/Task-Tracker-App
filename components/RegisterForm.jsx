@@ -4,7 +4,7 @@ import axios from 'axios';
 import ApiEndPoints from './ApiEndPoints.json';
 import Loading from './Loading'
 import { useNavigation } from '@react-navigation/native';
-
+import Toast from './Toast';
 const Register = () => {
   const [name, setName] = useState('');
   const [githubId, setGithubId] = useState('');
@@ -20,11 +20,13 @@ const Register = () => {
     setloading(true)
     if (!name  || !email  || !username  || !password  || !confirmPassword ) {
       Alert.alert('Required*', 'Please enter all required fields.');
+      setloading(false)
       return;
     }
 
     if (password !== confirmPassword) {
       Alert.alert('Check', 'Password mismatch!');
+      setloading(false)
       return;
     }
 
@@ -33,6 +35,7 @@ const Register = () => {
         'Invalid GitHub ID',
         'Please remove "https://github.com/", "github.com/", or "/" and just enter your GitHub username.'
       );
+      setloading(false)
       return false
     }
 
@@ -48,15 +51,20 @@ const Register = () => {
 
     try {
       const res = await axios.post(registerEndpoint, registrationData);
-      if (res.status == 200) {
-        Alert.alert('Success', 'Registration Successful!');
+      if (res.status == 200 && res.data.message == "User Name already Exists Use Another Username") {
+        Alert.alert('Success', res.data.message);
+        setloading(false)
+        // navigation.goBack();
+      } 
+      if (res.status == 200 && res.data.message == "User Registration Successfull..") {
+        Alert.alert('Success', res.data.message);
+        Toast().toast(res.data.message)
         setloading(false)
         navigation.goBack();
-      } else if(res.status == 400) {
-        Alert.alert('Error', 'An error occurred during registration.');
       }
     } catch (error) {
       console.error(error);
+      setloading(false)
       Alert.alert('Error', 'An error occurred during registration.');
     }
   };
@@ -118,7 +126,6 @@ const Register = () => {
       <TouchableOpacity
         style={styles.registerButton}
         onPress={handleRegister}
-        // disabled={invalidGithubId}
       >
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>

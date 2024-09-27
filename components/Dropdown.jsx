@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import ApiEndPoints from './ApiEndPoints.json' 
 import axios from 'axios';
+import Toast from './Toast';
 const Dropdown = (props) => {
   const [selectedValue, setSelectedValue] = useState(props.task.status);
 
@@ -14,6 +15,7 @@ const Dropdown = (props) => {
           // alert("Please Pull to refresh")
           // console.log(res.data.message);
           props.refresh()
+          Toast().toast(res.data.message)
           setSelectedValue(updateStatus); 
         })
         .catch((err) => console.log(err));

@@ -4,7 +4,6 @@ import Color from '../../components/Color';
 import { useRouter } from 'expo-router';
 import LoginForm from '../../components/LoginForm';
 import PushNotification from '../../components/PushNotification';
-
 const Login = () => {
   const router = useRouter();
   
