@@ -6,6 +6,7 @@ import axios from 'axios';
 import uuid from 'react-native-uuid';
 import { useNavigation } from '@react-navigation/native';
 import { userInfo } from './_layout';
+import Toast from '../../components/Toast';
 
 const AddTask = () => {
   const [title, setTitle] = useState('');
@@ -39,8 +40,9 @@ const AddTask = () => {
     try {
       const res = await axios.post(addtaskend, taskdata);
       if (res.status === 200) {
-        Alert.alert('Success', 'New Task Added');
-        navigation.goBack(); // Go back to the previous screen
+        // Alert.alert('Success', 'New Task Added');
+        Toast().toast("New Task Added")
+        navigation.goBack();
       } else {
         Alert.alert('Error', 'Error adding task');
       }

@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import ApiEndPoints from './ApiEndPoints.json' 
 import axios from 'axios';
+import Toast from './Toast';
 const Dropdown = (props) => {
   const [selectedValue, setSelectedValue] = useState(props.task.status);
 
@@ -11,9 +12,11 @@ const Dropdown = (props) => {
       axios
         .get(`${ApiEndPoints._base}/task/updatetask/${taskId}/${updateStatus}`)
         .then((res) => {
-          alert("Please Pull to refresh")
+          // alert("Please Pull to refresh")
           // console.log(res.data.message);
-          setSelectedValue(updateStatus); // Update state here
+          props.refresh()
+          Toast().toast(res.data.message)
+          setSelectedValue(updateStatus); 
         })
         .catch((err) => console.log(err));
     }
@@ -83,7 +86,7 @@ const styles = StyleSheet.create({
 const pickerSelectStyles = StyleSheet.create({
   inputAndroid: {
     width:150,
-    backgroundColor:"#948a8a94",
+    backgroundColor:"#00000063",
     margin:10,
   },
 });

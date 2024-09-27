@@ -35,7 +35,7 @@ const TaskTabs = () => {
             headerLeft: () => null,
             title:'All Tasks',
             tabBarIcon:({color, size})=>(
-              <Ionicons name='list-circle' color={colors.primary} size={sizes.medium}/>
+              <Ionicons name='list-circle' color={colors.primary} size={sizes.large}/>
             )
           }}
           />
@@ -43,7 +43,7 @@ const TaskTabs = () => {
         name='CompletedTasks'
         options={{
             title:'Completed Tasks', tabBarIcon:({color, size})=>(
-              <Ionicons name='checkmark-done-circle' color={colors.primary} size={sizes.medium}/>
+              <Ionicons name='checkmark-done-circle' color={colors.primary} size={sizes.large}/>
             )
           }}
           />
@@ -51,7 +51,7 @@ const TaskTabs = () => {
         name='AddTask'
         options={{
             title:'Add Task', tabBarIcon:({color, size})=>(
-              <Ionicons name='add-circle' color={colors.primary} size={sizes.medium}/>
+              <Ionicons name='add-circle' color={colors.primary} size={sizes.large}/>
             )
           }}
           />
@@ -59,19 +59,20 @@ const TaskTabs = () => {
         name='ArchievedTasks'
         options={{
             title:'Archieved Tasks', tabBarIcon:({color, size})=>(
-              <Ionicons name='archive' color={colors.primary} size={sizes.medium}/>
+              <Ionicons name='archive' color={colors.primary} size={sizes.large}/>
             )
           }}
           />
         <Tabs.Screen
         name='Profile'
         options={{
-            title:'Profile', tabBarIcon:({color, size})=>(
+            title:'Profile',
+            tabBarIcon:({color, size})=>(
               <View>
-                {/* {dp_url !='' ? */}
-                {/* <Image source={{ uri: dp_url }} style={styles.profileImage}/> :  */}
-                <Ionicons name='person' color={colors.primary} size={sizes.medium}/>
-                {/* }  */}
+                {(dp_url && dp_url !='') ?
+                <Image source={{ uri: dp_url }} style={styles.profileImage}/> :  
+                <Ionicons name='person' color={colors.primary} size={sizes.large}/>
+                }
               </View>
             )
           }}
@@ -86,10 +87,10 @@ export default TaskTabs
 
 const styles = StyleSheet.create({
   profileImage: {
-    width: 40,
-    height: 40,
+    width: 38,
+    height: 38,
     borderRadius: 50,
-    marginTop:20,
+    // marginTop:20,
     alignItems:'center'
   }
 })

@@ -51,7 +51,7 @@ loadTasks()
         {/* <Color color='#eeee9e'/> */}
         {
           fetching ? <Loading text = "Archieved Tasks" /> : 
-          <ShowTasks tasks={archivedTasks} refresh = {handlerefres} refreshState={refreshing}/>
+          <ShowTasks tasks={archivedTasks} refresh = {handlerefres} refreshState={refreshing} reload={loadTasks}/>
         }
     </View>
   )

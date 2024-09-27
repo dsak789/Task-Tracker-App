@@ -24,12 +24,10 @@ const loadTasks = async ()=>{
     const end=`${ApiEndPoints._base}/${ApiEndPoints.tasks}/${userData?.username}`
     const res = await axios.get(end)
     setTasks(res.data.Tasks)
-  } catch (error) {
-    console.log(error)
-  }
-  finally{
     setFetching(false)
     setRefreshing(false)
+  } catch (error) {
+    console.log(error)
   }
 }
 
@@ -47,7 +45,7 @@ loadTasks()
       {fetching?
         <Loading text="Tasks to be Completed"/>
       :
-        <ShowTasks tasks={tasks} refresh = {handlerefres} refreshState={refreshing}/>
+        <ShowTasks tasks={tasks} refresh = {handlerefres} refreshState={refreshing} reload={loadTasks}/>
       }
     </View>
   )

@@ -4,8 +4,8 @@ import Dropdown from './Dropdown';
 
 const ShowTasks = (props) => {
   const taskStatusColors = {
-    'Completed':'green',
-    'Todo':'blue',
+    'Completed':'#28A745',
+    'Todo':'#FF5733',
     'Archieve':'#545412e1',
     'In Progress':'orange'
   }
@@ -22,7 +22,7 @@ const ShowTasks = (props) => {
               </View>
               <View style={styles.taskStatusBox}>
                 <Text style={[styles.taskStatus,{color:taskStatusColors[item.status]}]}>{item.status}</Text>
-                {item.status != 'Completed'? <Dropdown task={item}/>:<></>}                
+                {item.status != 'Completed'? <Dropdown task={item}  refresh={props.reload}  />:<></>}                
               </View>
             </View>
         )

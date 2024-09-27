@@ -2,7 +2,6 @@ import { Button, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import * as Notification from 'expo-notifications'
-import att from '../assets/images/icon.png'
 
 
 const PushNotification = () => {
