@@ -75,11 +75,17 @@ const _layout = () => {
             title: '',
             headerLeft: () => (
               <View style={styles.headerLeft}>
-                <Image
-                  source={logo}
-                  style={styles.profileImage}
-                  onPress={() => console.log('TaskTracker')}
-                />
+                <Pressable 
+                onPress={() => 
+                  {
+                    // Alert.alert('Hi..','Thankyou for using TaskTracker')
+                    router.push('contact/Contact')
+                  }}>
+                  <Image
+                    source={logo}
+                    style={styles.profileImage}
+                  />
+                </Pressable>
               </View>
             ),
             headerRight: () => (
@@ -93,6 +99,13 @@ const _layout = () => {
             
           }}
           initialParams={{ dp_url: dp }}
+        />
+        <Stack.Screen
+        name='contact/Contact'
+        options={{
+          title:'Contact',
+          headerTitle:'Task Tracker Contact',
+        }}
         />
       </Stack>
     </View>
