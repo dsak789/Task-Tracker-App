@@ -8,7 +8,7 @@ const NotFound = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    navigation.setOptions({ headerShown: false }); // Hide the header
+    navigation.setOptions({ headerShown: false }); 
 
     const timer = setTimeout(() => {
       router.replace('/auth');

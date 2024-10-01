@@ -27,7 +27,6 @@ const _layout = () => {
     }
   };
 
-  // Logout handler
   const handleLogout = async () => {
     Alert.alert(
       
@@ -45,11 +44,11 @@ const _layout = () => {
               console.log(error);
             }
           },
-          style: 'destructive', // Red button for logout
+          style: 'destructive',
         },
         {
           text: 'Stay',
-          style: 'cancel', // Dismiss the alert
+          style: 'cancel', 
         },
       ],
       { cancelable: true }

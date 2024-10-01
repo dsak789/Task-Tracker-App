@@ -1,18 +1,11 @@
-import { View, Button, ScrollView, StyleSheet } from 'react-native';
-import React, { useState } from 'react';
-import Color from '../../components/Color';
-import { useRouter } from 'expo-router';
+import { View, ScrollView, StyleSheet } from 'react-native';
+import React from 'react';
 import LoginForm from '../../components/LoginForm';
-import PushNotification from '../../components/PushNotification';
-const Login = () => {
-  const router = useRouter();
-  
+const Login = () => {  
   return (
     <View style={styles.loginContainer}>
       <ScrollView contentContainerStyle={styles.loginContainer} keyboardDismissMode='on-drag'>
-      {/* <Color color='#568233' /> */}
       <LoginForm/>
-      {/* <PushNotification /> */}
       </ScrollView>
     </View>
   );

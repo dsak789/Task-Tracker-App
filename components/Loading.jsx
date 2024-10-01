@@ -19,16 +19,16 @@ export default Loading
 
 const styles = StyleSheet.create({
     loadingContainer:{
-        // flex:1,
         backgroundColor:"#131212",
         justifyContent:'center',
         alignItems:'center',
         minHeight:'100%',
     },
     loadingText:{
-      marginBottom:80,
-        color:'wheat',
-        fontSize:25
+      marginBottom:60,
+      color:'wheat',
+      fontSize:25,
+      textAlign:'center',
     },
     backgroundImage: {
       flex: 1,
