@@ -1,5 +1,5 @@
 node_modules/
-assets/videos
+# assets/videos
 .expo/
 dist/
 npm-debug.*
