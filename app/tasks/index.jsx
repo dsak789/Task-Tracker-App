@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import React, { useState, useEffect,useContext } from 'react'
 import {userInfo} from './_layout'
 import ShowTasks from '../../components/ShowTasks'
@@ -33,17 +33,12 @@ const loadTasks = async ()=>{
 
 useEffect(()=>{
 loadTasks()
-// const interval = setInterval(() => {
-//   loadTasks()
-// }, 10000) // Poll every 10 seconds
-
-// return () => clearInterval(interval) // Cleanup interval on component unmount
 }, [userData])
 
   return (
     <View>
       {fetching?
-        <Loading text="Tasks to be Completed"/>
+        <Loading text="Pending Tasks "/>
       :
         <ShowTasks tasks={tasks} refresh = {handlerefres} refreshState={refreshing} reload={loadTasks}/>
       }

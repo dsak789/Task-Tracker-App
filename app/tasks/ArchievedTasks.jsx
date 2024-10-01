@@ -1,7 +1,6 @@
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import React, { useState, useEffect,useContext } from 'react'
 import {userInfo} from './_layout'
-import Color from '../../components/Color'
 import ShowTasks from '../../components/ShowTasks'
 import ApiEndPoints from '../../components/ApiEndPoints.json'
 import axios from 'axios'
@@ -20,7 +19,6 @@ const handlerefres = () =>{
 const loadTasks = async ()=>{
   try {
     end=`${ApiEndPoints._base}/${ApiEndPoints.archieved_tasks}/${userData?.username}`
-    // console.log(end)
     await axios.get(end)
     .then((res)=>{
       setArchievedTasks(res.data.Tasks)
@@ -36,19 +34,13 @@ const loadTasks = async ()=>{
 }
 
 useEffect(()=>{
-loadTasks()
-// const interval = setInterval(() => {
-//   loadTasks()
-// }, 10000) 
-
-// return () => clearInterval(interval) 
+loadTasks() 
 }, [])
 
 
 
   return (
     <View>
-        {/* <Color color='#eeee9e'/> */}
         {
           fetching ? <Loading text = "Archieved Tasks" /> : 
           <ShowTasks tasks={archivedTasks} refresh = {handlerefres} refreshState={refreshing} reload={loadTasks}/>

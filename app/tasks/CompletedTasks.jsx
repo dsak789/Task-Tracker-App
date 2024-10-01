@@ -1,7 +1,6 @@
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import React, { useState, useEffect,useContext } from 'react'
 import {userInfo} from './_layout'
-import Color from '../../components/Color'
 import ShowTasks from '../../components/ShowTasks'
 import ApiEndPoints from '../../components/ApiEndPoints.json'
 import axios from 'axios'
@@ -45,7 +44,6 @@ const CompletedTasks = () => {
 
   return (
     <View>
-      {/* <Color color="#225864"/> */}
       {
         fetching ? 
         <Loading text="Completed Tasks"/> : 

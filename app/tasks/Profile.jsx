@@ -1,20 +1,21 @@
-import { ScrollView, Button, View, Image, Text, Switch, StyleSheet, TextInput } from 'react-native';
 import React, { useContext, useState } from 'react';
+import { ScrollView, Button, View, Image, Text, Switch, StyleSheet, TextInput } from 'react-native';
+import { Video } from 'expo-av';
 import { useRouter } from 'expo-router';
 import { userInfo } from './_layout';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import ApiEndPoints from '../../components/ApiEndPoints.json'
-
+import PushNotification from '../../components/PushNotification'
 const Profile = () => {
   const router = useRouter();
   const userData = useContext(userInfo);
 
   const [showPasswordChange, setShowPasswordChange] = useState(false);
   const [showChangeDP, setShowChangeDP] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
   const [showTaskTrackerGuide, setShowTaskTrackerGuide] = useState(false);
 
-  // Password change state
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
@@ -109,16 +110,34 @@ const Profile = () => {
         )}
 
         <View style={styles.switchRow}>
+          <Text style={styles.switchText}>Notification Preferences</Text>
+          <Switch value={showNotification} onValueChange={() => setShowNotification(!showChangeDP)} />
+        </View>
+        {showNotification && (
+          <View style={styles.changeNotification}>
+            <Text style={styles.notificationText}>Every Day you will get two Notifications </Text>
+            <Text style={styles.notificationSubText}>  - Asking to Add New Task.</Text>
+            <Text style={styles.notificationSubText}>  - Asking that Have you Completed any Task.</Text>
+            <Text style={styles.notificationSubText}>  * Present this notifications featureis not yet implemented will be implemented on user Feedback</Text>
+            {/* <PushNotification/> */}
+          </View>
+        )}
+
+        <View style={styles.switchRow}>
           <Text style={styles.switchText}>How to Use Task Tracker</Text>
           <Switch value={showTaskTrackerGuide} onValueChange={() => setShowTaskTrackerGuide(!showTaskTrackerGuide)} />
         </View>
         {showTaskTrackerGuide && (
           <View style={styles.videoContainer}>
-            <Text>Dummy Task Tracker Guide Video</Text>
-            <View style={styles.videoPlaceholder}>
-              {/* Embed a dummy video */}
-              <Text style={styles.videoText}>[Dummy Video Placeholder]</Text>
-            </View>
+            <Video
+              source={require('../../assets/videos/guide.mp4')} 
+              // source={{uri:`https://github.com/Panga-Deepthi/10000-coders/raw/refs/heads/main/What's%20it%20like%20to%20work%20at%20Google_.mp4`}} 
+              // source={{uri:`https://drive.google.com/file/d/1yPBS4xffJ1hIpMUByqv70T0jonj0JNOi/view?usp=sharing`}} 
+              style={styles.video}
+              useNativeControls
+              resizeMode="contain"
+              
+            />
           </View>
         )}
       </View>
@@ -151,11 +170,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#333',
     marginBottom: 20,
+    textAlign:'center',
   },
   profileImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 150,
+    height: 150,
+    borderRadius: 100,
+    borderBottomColor:'red',
+    borderWidth:20,
     marginBottom: 20,
   },
   infoText: {
@@ -200,19 +222,31 @@ const styles = StyleSheet.create({
     color: '#333',
     textAlign: 'center',
   },
+  changeNotification: {
+    marginTop: 10,
+    padding: 10,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+  },
+  notificationText: {
+    color: '#333',
+    fontSize:16,
+  },
+  notificationSubText: {
+    color: '#333',
+    fontSize:14,
+  },
   videoContainer: {
     marginTop: 10,
-  },
-  videoPlaceholder: {
-    height: 200,
-    backgroundColor: '#ccc',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 8,
+    width:'100%'
   },
   videoText: {
     color: '#333',
     fontSize: 16,
+  },
+  video: {
+    width: '100%',
+    height: 700,
   },
 });
 

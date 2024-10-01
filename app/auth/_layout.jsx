@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Tabs } from 'expo-router'
 import { Ionicons } from '@expo/vector-icons'
 import {colors,sizes } from '../../assets/theme/styles.json'
@@ -12,9 +12,8 @@ const AuthenticationTabs = () => {
             title:'Login',
             tabBarIcon:()=>(
               <Ionicons name='log-in' color={colors.primary} size={sizes.large}/>
-            ),
-            // headerShown:false
-            }}
+            )
+          }}
             />
           <Tabs.Screen
             name='Register'

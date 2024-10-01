@@ -18,7 +18,7 @@ const ShowTasks = (props) => {
           <View key={item._id} style={styles.taskContainer}>
               <View style={styles.taskInfo}>
                 <Text style={styles.taskTitle}>{item.title}</Text>
-                <Text style={styles.taskDescription}>:~{item.description}</Text>
+                <Text style={styles.taskDescription}>{item.description}</Text>
               </View>
               <View style={styles.taskStatusBox}>
                 <Text style={[styles.taskStatus,{color:taskStatusColors[item.status]}]}>{item.status}</Text>
