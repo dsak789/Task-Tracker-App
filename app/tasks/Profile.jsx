@@ -1,12 +1,13 @@
 import React, { useContext, useState } from 'react';
 import { ScrollView, Button, View, Image, Text, Switch, StyleSheet, TextInput } from 'react-native';
-import { Video } from 'expo-av';
 import { useRouter } from 'expo-router';
 import { userInfo } from './_layout';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ApiEndPoints from '../../components/ApiEndPoints.json'
+import GuideVideo from '../../components/GuideVideo';
 import PushNotification from '../../components/PushNotification'
+import Contact from '../contact/Contact'
 const Profile = () => {
   const router = useRouter();
   const userData = useContext(userInfo);
@@ -14,6 +15,7 @@ const Profile = () => {
   const [showPasswordChange, setShowPasswordChange] = useState(false);
   const [showChangeDP, setShowChangeDP] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
+  const [showContact, setShowContact] = useState(false);
   const [showTaskTrackerGuide, setShowTaskTrackerGuide] = useState(false);
 
   const [oldPassword, setOldPassword] = useState('');
@@ -111,7 +113,7 @@ const Profile = () => {
 
         <View style={styles.switchRow}>
           <Text style={styles.switchText}>Notification Preferences</Text>
-          <Switch value={showNotification} onValueChange={() => setShowNotification(!showChangeDP)} />
+          <Switch value={showNotification} onValueChange={() => setShowNotification(!showNotification)} />
         </View>
         {showNotification && (
           <View style={styles.changeNotification}>
@@ -124,22 +126,21 @@ const Profile = () => {
         )}
 
         <View style={styles.switchRow}>
+          <Text style={styles.switchText}>Contact or Support</Text>
+          <Switch value={showContact} onValueChange={() => setShowContact(!showContact)} />
+        </View>
+        {showContact && (
+          <View style={styles.contactContainer}>
+            <Text style={styles.contactText}>Tap on Task Tracker icon on top left side or click below button to go to Contact</Text>
+            <Button title='Go to Contact' onPress={()=>router.push('contact/Contact')}/>
+            {/* <Contact/> */}
+          </View>
+        )}
+        <View style={styles.switchRow}>
           <Text style={styles.switchText}>How to Use Task Tracker</Text>
           <Switch value={showTaskTrackerGuide} onValueChange={() => setShowTaskTrackerGuide(!showTaskTrackerGuide)} />
         </View>
-        {showTaskTrackerGuide && (
-          <View style={styles.videoContainer}>
-            <Video
-              source={require('../../assets/videos/guide.mp4')} 
-              // source={{uri:`https://github.com/Panga-Deepthi/10000-coders/raw/refs/heads/main/What's%20it%20like%20to%20work%20at%20Google_.mp4`}} 
-              // source={{uri:`https://drive.google.com/file/d/1yPBS4xffJ1hIpMUByqv70T0jonj0JNOi/view?usp=sharing`}} 
-              style={styles.video}
-              useNativeControls
-              resizeMode="contain"
-              
-            />
-          </View>
-        )}
+        {showTaskTrackerGuide && (<GuideVideo/>)}
       </View>
     </ScrollView>
   );
@@ -236,17 +237,17 @@ const styles = StyleSheet.create({
     color: '#333',
     fontSize:14,
   },
-  videoContainer: {
-    marginTop: 10,
-    width:'100%'
-  },
-  videoText: {
+  contactText: {
     color: '#333',
-    fontSize: 16,
+    fontSize:14,
+    textAlign:'center',
+    padding:10
   },
-  video: {
-    width: '100%',
-    height: 700,
+  contactContainer: {
+    backgroundColor:'#c1bcbc9e',
+    width:'100%',
+    padding:5,
+    borderRadius:10
   },
 });
 
