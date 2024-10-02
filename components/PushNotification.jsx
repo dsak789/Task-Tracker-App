@@ -1,11 +1,12 @@
-import { Button, StyleSheet, Text, View } from 'react-native'
+import { Button, StyleSheet, Text } from 'react-native'
 import React, { useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import * as Notification from 'expo-notifications'
+import { useRouter } from 'expo-router'
 
 
 const PushNotification = () => {
-
+    const router = useRouter()
 
     Notification.setNotificationHandler({
         handleNotification: async()=>({
@@ -17,7 +18,14 @@ const PushNotification = () => {
 
     useEffect(()=>{
         push
-    })
+        const subs = Notification.addNotificationResponseReceivedListener(res =>{
+            const route = res.notification.request.content.data.route
+            if(route){
+                router.push(route)
+            }
+        })
+        return () => subs.remove()
+    },[])
 
     const push = async () =>{
         const {status} = Notification.requestPermissionsAsync()
@@ -38,21 +46,48 @@ const PushNotification = () => {
     const send  = async () =>{
         await Notification.scheduleNotificationAsync({
             content:{
-                title:"Test",
-                data:"Test YT LINK Notification",
-                body:'https://www.youtube.com/results?search_query=stack+navigation+react+native',
-                color:'red',
-                vibrate:false,
-                // badge:,
+                title:"Hey..! Achiever",
+                body:'Thankyou For Using Task Tracker Application..🫱🏻‍🫲🏻',
+                // data: { route: "/tasks/Profile" },
+                color:'#ff7300',
+                vibrate:true,
+                autoDismiss:true
+            },
+            trigger:null            
+        })
+        await Notification.scheduleNotificationAsync({
+            content:{
+                title:"Hey..! Achiever",
+                body:'Any New Task to ADD 🎯',                
+                data: { route: "/tasks/AddTask" },
+                color:'#15ff00',
+                vibrate:true,
                 autoDismiss:true
             },
             trigger:{
-                seconds:1,
-                repeats:false,
-            },
-            
-            
+                hour:9,
+                minute:0,
+                repeats:true
+            }           
         })
+        await Notification.scheduleNotificationAsync({
+            content:{
+                title:"Hey..! Achiever",
+                body:'Completed Any Task Today ✅',            
+                data: { route: "/tasks" },
+                color:'#ff7300',
+                vibrate:true,
+                autoDismiss:true
+            },
+            trigger:{
+                hour:21,
+                minute:0,
+                repeats:true
+            }           
+        })
+
+        
+
         console.log("Notified")
     }
 
@@ -60,8 +95,8 @@ const PushNotification = () => {
     
   return (
     <SafeAreaView style={styles.container}>
-      <Text>PushNotification</Text>
-      <Button title='Push Notification' onPress={send}/>
+        <Text>This is Demo Notification</Text>
+        <Button title='Send Notification' onPress={send}/>
     </SafeAreaView>
   )
 }
@@ -70,11 +105,7 @@ export default PushNotification
 
 const styles = StyleSheet.create({
     container:{
-        flex:1,
-        justifyContent:'center',
+        justifyContent:'space-around',
         alignItems:'center',
-        backgroundColor:"red",
-        // minHeight:'100%',
-        // minWidth:'90%'
     }
 })

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Alert } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import ApiEndPoints from './ApiEndPoints.json' 
 import axios from 'axios';
@@ -7,18 +7,43 @@ import Toast from './Toast';
 const Dropdown = (props) => {
   const [selectedValue, setSelectedValue] = useState(props.task.status);
 
-  const updateTask = (taskId, updateStatus) => {
+  const updateTask = async (taskId, updateStatus) => {
     if (updateStatus !== undefined && updateStatus !== null) {
-      axios
-        .get(`${ApiEndPoints._base}/task/updatetask/${taskId}/${updateStatus}`)
-        .then((res) => {
-          // alert("Please Pull to refresh")
-          // console.log(res.data.message);
-          props.refresh()
-          Toast().toast(res.data.message)
-          setSelectedValue(updateStatus); 
-        })
-        .catch((err) => console.log(err));
+      if(updateStatus=='Completed'){
+        Alert.alert("Hurray..🎉","Have you Completed this Task..?",
+          [
+            {
+              text:"Yes",
+              onPress: async ()=> {
+                await axios
+                .get(`${ApiEndPoints._base}/task/updatetask/${taskId}/${updateStatus}`)
+                .then((res) => {
+                  props.refresh()
+                  Toast().toast(res.data.message)
+                  setSelectedValue(updateStatus); 
+                })
+                .catch((err) => console.log(err));
+              },
+              style:'destructive'
+            },
+            {
+              text:"Not Yet",
+              onPress:()=> false,
+              style:'cancel'
+            }
+          ])
+      }else{
+        await axios
+          .get(`${ApiEndPoints._base}/task/updatetask/${taskId}/${updateStatus}`)
+          .then((res) => {
+            props.refresh()
+            Toast().toast(res.data.message)
+            setSelectedValue(updateStatus); 
+          })
+          .catch((err) => console.log(err));
+        
+      }
+      
     }
     else{
       // alert('Nothing..')
