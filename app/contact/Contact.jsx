@@ -62,7 +62,7 @@ const Contact = () => {
         <Text style={styles.socialText}> GitHub</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.contactItem} onPress={() => openURL('linkedin.com/in/saiajithkumardannana')}>
+      <TouchableOpacity style={styles.contactItem} onPress={() => openURL('https://linkedin.com/in/saiajithkumardannana')}>
         <Ionicons name="logo-linkedin" size={29} color="#555" />
         <Text style={styles.socialText}> LinkedIn</Text>
       </TouchableOpacity>

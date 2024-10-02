@@ -107,6 +107,13 @@ const _layout = () => {
           headerTitle:'Task Tracker Contact',
         }}
         />
+        <Stack.Screen
+        name='contact/MultiScreen'
+        options={{
+          title:'Seetings',
+          headerTitle:'Task Tracker Settings',
+        }}
+        />
       </Stack>
     </View>
   );
