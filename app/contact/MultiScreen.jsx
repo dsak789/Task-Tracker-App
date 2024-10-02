@@ -85,7 +85,7 @@ const MultiScreen = () => {
             <Text style={styles.notificationText}>Every Day you will get two Notifications </Text>
             <Text style={styles.notificationSubText}>  - Asking to Add New Task.</Text>
             <Text style={styles.notificationSubText}>  - Asking that Have you Completed any Task.</Text>
-            <Text style={styles.notificationSubText}>  * Present this notifications featureis not yet implemented will be implemented on user Feedback</Text>
+            <Text style={styles.notificationSubText}>  * Present this notifications feature is not yet Completely implemented will be improved on user Feedback</Text>
           </View>
             <PushNotification/>
         </>
