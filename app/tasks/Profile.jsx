@@ -64,10 +64,10 @@ const Profile = () => {
           <Ionicons name='arrow-forward-circle-outline' size={28} color={'black'}/>
         </TouchableOpacity>}
 
-        <TouchableOpacity style={styles.SettingsItems} onPress={()=>routinghandler('changeNotify')}>
-          <Text style={styles.settingsItemText}>Notification Preferences</Text>
-          <Ionicons name='arrow-forward-circle-outline' size={28} color={'black'}/>
-        </TouchableOpacity>
+      <TouchableOpacity style={styles.SettingsItems} onPress={()=>routinghandler('changeNotify')}>
+        <Text style={styles.settingsItemText}>Notification Preferences</Text>
+        <Ionicons name='arrow-forward-circle-outline' size={28} color={'black'}/>
+      </TouchableOpacity>
 
         <TouchableOpacity style={styles.SettingsItems} onPress={()=> router.push('contact/Contact')}>
           <Text style={styles.settingsItemText}>Contact or Support</Text>

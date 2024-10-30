@@ -5,12 +5,24 @@ import { useRouter } from 'expo-router';
 import logo from '../assets/images/TaskTracker1024.png';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
+import { fetch } from "@react-native-community/netinfo";
+import CheckNetwork from "../components/CheckNetwork";
 
 const _layout = () => {
   const router = useRouter();
   const [isLoggedin, setIsloggedin] = useState(false);
   const [dp, setDp] = useState('');
-  
+  const [isConnected, setIsConnected] = useState(false);
+  const checkInternet = () => {
+    fetch().then((state) => {
+      console.log("Connection type", state);
+      console.log("Is connected?", state.isConnected);
+      setIsConnected(!state.isConnected);
+    });
+  };
+  useEffect(() => {
+    checkInternet();
+  }, []);
   const loginCheck = async () => {
     try {
       let res = await AsyncStorage.getItem('loginInfo');
@@ -61,60 +73,62 @@ const _layout = () => {
 
   return (
     <View style={styles.appContainer}>
-      <Stack>
-        <Stack.Screen
-          name="auth"
-          options={{
-            title: 'Authentication',
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="tasks"
-          options={{
-            title: '',
-            headerLeft: () => (
-              <View style={styles.headerLeft}>
-                <Pressable 
-                onPress={() => 
-                  {
-                    // Alert.alert('Hi..','Thankyou for using TaskTracker')
-                    router.push('contact/Contact')
-                  }}>
-                  <Image
-                    source={logo}
-                    style={styles.profileImage}
-                  />
-                </Pressable>
-              </View>
-            ),
-            headerRight: () => (
-              <View style={styles.headerLeft}>
-                <Pressable onPress={handleLogout} style={styles.logoutbtn}>
-                  <Ionicons name="log-out" size={35} color="#2776d7" />
-                  {dp !='' && <Image source={{ uri: dp }} style={styles.profileImage} />}
-                </Pressable>
-              </View>
-            ),
-            
-          }}
-          initialParams={{ dp_url: dp }}
-        />
-        <Stack.Screen
-        name='contact/Contact'
-        options={{
-          title:'Contact',
-          headerTitle:'Task Tracker Contact',
-        }}
-        />
-        <Stack.Screen
-        name='contact/MultiScreen'
-        options={{
-          title:'Seetings',
-          headerTitle:'Task Tracker Settings',
-        }}
-        />
-      </Stack>
+      {isConnected ? (
+        <Stack>
+          <Stack.Screen
+            name="auth"
+            options={{
+              title: "Authentication",
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="tasks"
+            options={{
+              title: "",
+              headerLeft: () => (
+                <View style={styles.headerLeft}>
+                  <Pressable
+                    onPress={() => {
+                      // Alert.alert('Hi..','Thankyou for using TaskTracker')
+                      router.push("contact/Contact");
+                    }}
+                  >
+                    <Image source={logo} style={styles.profileImage} />
+                  </Pressable>
+                </View>
+              ),
+              headerRight: () => (
+                <View style={styles.headerLeft}>
+                  <Pressable onPress={handleLogout} style={styles.logoutbtn}>
+                    <Ionicons name="log-out" size={35} color="#2776d7" />
+                    {dp != "" && (
+                      <Image source={{ uri: dp }} style={styles.profileImage} />
+                    )}
+                  </Pressable>
+                </View>
+              ),
+            }}
+            initialParams={{ dp_url: dp }}
+          />
+          <Stack.Screen
+            name="contact/Contact"
+            options={{
+              title: "Contact",
+              headerTitle: "Task Tracker Contact",
+            }}
+          />
+          <Stack.Screen
+            name="contact/MultiScreen"
+            options={{
+              title: "Seetings",
+              headerTitle: "Task Tracker Settings",
+            }}
+          />
+        </Stack>
+      ) : (
+        <CheckNetwork status={isConnected} onRetry={checkInternet} />
+      )}
     </View>
   );
 };

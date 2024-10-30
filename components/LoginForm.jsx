@@ -42,11 +42,12 @@ const LoginForm = () => {
                     'password':password
                 })
                 if(res.data.message == 'Login Successfull'){
-                    const user = res.data.user                    
+                    const user = res.data.user         
                     const info = {
                         'isLogin':true,
                         'name':user.name,
                         'githubid':user.githubid,
+                        'email':user.email,
                         'username':user.username,
                         'dpUrl': user.dp_url
                     }

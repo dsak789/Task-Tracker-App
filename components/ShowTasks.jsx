@@ -1,5 +1,5 @@
-import { View, Text, ScrollView,FlatList, StyleSheet } from 'react-native';
-import React, { useState } from 'react';
+import { View, Text,FlatList, StyleSheet } from 'react-native';
+import React from 'react';
 import Dropdown from './Dropdown';
 
 const ShowTasks = (props) => {
@@ -9,6 +9,24 @@ const ShowTasks = (props) => {
     'Archieve':'#545412e1',
     'In Progress':'orange'
   }
+
+  const dateFormat = (addDate)=>{
+    const date = new Date(addDate)
+    const formatted = `${date.getFullYear()}-${(date.getMonth()+1).toString().padStart(2,'0')}-${(date.getDate()).toString().padStart(2,'0')} ${(date.getHours()).toString().padStart(2,'0')}:${(date.getMinutes()).toString().padStart(2,'0')}` 
+    return formatted
+  }
+
+  const updatestamp = (taskStatus) => {
+    if(taskStatus == "Completed"){
+      return 'Completed on'
+    }
+    if(taskStatus == "Archieve"){
+      return 'Archieved on'
+    }
+    return "Updated on"
+  }
+
+
   return (
     <View style={styles.ShowTasksContainer}>
       <FlatList 
@@ -19,6 +37,18 @@ const ShowTasks = (props) => {
               <View style={styles.taskInfo}>
                 <Text style={styles.taskTitle}>{item.title}</Text>
                 <Text style={styles.taskDescription}>{item.description}</Text>
+              </View>
+              <View style={styles.dateInfo}>
+                <View>
+                  <Text style={styles.addDate}>Added On</Text>
+                  <Text style={styles.addDate}>{dateFormat(item?.adddate) || item?.adddate}</Text>
+                </View>
+                <View>{item?.updatedon &&
+                  <>
+                    <Text style={styles.updatedon}>{updatestamp(item?.status)}</Text>
+                    <Text style={styles.updatedon}>{dateFormat(item?.updatedon)}</Text>
+                  </>}
+                </View>
               </View>
               <View style={styles.taskStatusBox}>
                 <Text style={[styles.taskStatus,{color:taskStatusColors[item.status]}]}>{item.status}</Text>
@@ -98,11 +128,28 @@ const styles = StyleSheet.create({
   },
   taskTitle: {
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 16,
   },
   taskDescription: {
     marginTop:10,
-    fontSize: 16,
+    fontSize: 14,
+  },
+  dateInfo:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems:'center',
+    paddingHorizontal:15,
+    marginHorizontal:15
+  },
+  addDate:{
+    textAlign:'center',
+    color:'#00806f',
+    fontSize:10
+  },
+  updatedon:{
+    textAlign:'center',
+    color:'#00806f',
+    fontSize:10
   },
  
   
