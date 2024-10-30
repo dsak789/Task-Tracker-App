@@ -3,7 +3,8 @@ import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import appLogo from '../../assets/images/TaskTracker1024.png';
 
-const adminProfilePhoto = 'https://dannanasaiajithkumar.vercel.app/static/media/SBProfile.c9e5f2075d7dea913aee.jpg';
+const adminProfilePhoto =
+  "https://raw.githubusercontent.com/dsak789/Dannana-Sai-Ajith-Kumar/refs/heads/main/public/assets/SBProfile.jpg";
 
 const Contact = () => {
 

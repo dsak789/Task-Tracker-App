@@ -17,7 +17,7 @@ const _layout = () => {
     fetch().then((state) => {
       console.log("Connection type", state);
       console.log("Is connected?", state.isConnected);
-      setIsConnected(!state.isConnected);
+      setIsConnected(state.isConnected);
     });
   };
   useEffect(() => {
