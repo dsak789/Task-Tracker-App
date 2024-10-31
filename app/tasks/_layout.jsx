@@ -10,12 +10,12 @@ export const userInfo = createContext();
 
 const TaskTabs = () => {
   const [userData, setUserData] = useState();
-  const [isConnected, setIsConnected] = useState(false);
+  const [isConnected, setIsConnected] = useState();
+  const [network, setNetwork] = useState();
   const checkInternet = () => {
     fetch().then((state) => {
-      console.log("Connection type", state);
-      console.log("Is connected?", state.isConnected);
       setIsConnected(state.isConnected);
+      setNetwork(state)
     });
   };
   const getInfo = async () => {
@@ -34,7 +34,7 @@ const TaskTabs = () => {
   }, []);
   return (
     <View style={styles.taskMain}>
-        {isConnected ? (
+      {isConnected && network?.isInternetReachable ? (
         <userInfo.Provider value={userData}>
           <Tabs
             screenOptions={{
@@ -147,11 +147,11 @@ const TaskTabs = () => {
               }}
             />
           </Tabs>
-          </userInfo.Provider>
-        ) : (
-          <CheckNetwork status={isConnected} onRetry={checkInternet} />
-        )}
-      </View>
+        </userInfo.Provider>
+      ) : (
+        <CheckNetwork status={network} onRetry={checkInternet} />
+      )}
+    </View>
   );
 };
 

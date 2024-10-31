@@ -6,12 +6,13 @@ import { StyleSheet, View } from "react-native";
 import { fetch } from "@react-native-community/netinfo";
 import CheckNetwork from "../../components/CheckNetwork";
 const AuthenticationTabs = () => {
-  const [isConnected, setIsConnected] = useState(false);
+  const [isConnected, setIsConnected] = useState();
+  const [network, setNetwork] = useState();
+
   const checkInternet = () => {
     fetch().then((state) => {
-      console.log("Connection type", state);
-      console.log("Is connected?", state.isConnected);
       setIsConnected(state.isConnected);
+      setNetwork(state)
     });
   };
   useEffect(() => {
@@ -19,7 +20,7 @@ const AuthenticationTabs = () => {
   }, []);
   return (
     <View style={styles.authView}>
-      {isConnected ? (
+      {isConnected && network?.isInternetReachable ? (
         <Tabs>
           <Tabs.Screen
             name="Login"
@@ -49,7 +50,7 @@ const AuthenticationTabs = () => {
           />
         </Tabs>
       ) : (
-        <CheckNetwork status={isConnected} onRetry={checkInternet} />
+        <CheckNetwork status={network} onRetry={checkInternet} />
       )}
     </View>
   );

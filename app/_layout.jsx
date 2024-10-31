@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { View, Alert, Image, StyleSheet, Pressable } from 'react-native';
-import { Stack } from 'expo-router';
-import { useRouter } from 'expo-router';
-import logo from '../assets/images/TaskTracker1024.png';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Ionicons } from '@expo/vector-icons';
+import React, { useState, useEffect } from "react";
+import { View, Alert, Image, StyleSheet, Pressable } from "react-native";
+import { Stack } from "expo-router";
+import { useRouter } from "expo-router";
+import logo from "../assets/images/TaskTracker1024.png";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Ionicons } from "@expo/vector-icons";
 import { fetch } from "@react-native-community/netinfo";
 import CheckNetwork from "../components/CheckNetwork";
 
 const _layout = () => {
   const router = useRouter();
   const [isLoggedin, setIsloggedin] = useState(false);
-  const [dp, setDp] = useState('');
-  const [isConnected, setIsConnected] = useState(false);
+  const [dp, setDp] = useState("");
+  const [isConnected, setIsConnected] = useState();
+  const [network, setNetwork] = useState();
   const checkInternet = () => {
     fetch().then((state) => {
-      console.log("Connection type", state);
-      console.log("Is connected?", state.isConnected);
       setIsConnected(state.isConnected);
+      setNetwork(state);
     });
   };
   useEffect(() => {
@@ -25,14 +25,14 @@ const _layout = () => {
   }, []);
   const loginCheck = async () => {
     try {
-      let res = await AsyncStorage.getItem('loginInfo');
+      let res = await AsyncStorage.getItem("loginInfo");
       res = JSON.parse(res) || { isLogin: false };
       setIsloggedin(res.isLogin);
       // console.log("Asynch==>",res)
-      const dp_url = res.dpUrl || ''
+      const dp_url = res.dpUrl || "";
       setDp(dp_url);
       if (res.isLogin) {
-        router.replace('/tasks');
+        router.replace("/tasks");
       }
     } catch (error) {
       console.log(error);
@@ -41,26 +41,29 @@ const _layout = () => {
 
   const handleLogout = async () => {
     Alert.alert(
-      
-      'Logout!','Sure want to logout...?',
+      "Logout!",
+      "Sure want to logout...?",
       [
         {
-          text: 'Logout',
+          text: "Logout",
           onPress: async () => {
             try {
-              await AsyncStorage.setItem('loginInfo', JSON.stringify({ isLogin: false }));
+              await AsyncStorage.setItem(
+                "loginInfo",
+                JSON.stringify({ isLogin: false })
+              );
               // console.log('Logged Out');
-              setIsloggedin(false)
-              router.replace('/auth');
+              setIsloggedin(false);
+              router.replace("/auth");
             } catch (error) {
               console.log(error);
             }
           },
-          style: 'destructive',
+          style: "destructive",
         },
         {
-          text: 'Stay',
-          style: 'cancel', 
+          text: "Stay",
+          style: "cancel",
         },
       ],
       { cancelable: true }
@@ -69,11 +72,11 @@ const _layout = () => {
 
   useEffect(() => {
     loginCheck();
-  }, [dp,setDp]);
+  }, [dp, setDp]);
 
   return (
     <View style={styles.appContainer}>
-      {isConnected ? (
+      {isConnected && network?.isInternetReachable ? (
         <Stack>
           <Stack.Screen
             name="auth"
@@ -127,7 +130,7 @@ const _layout = () => {
           />
         </Stack>
       ) : (
-        <CheckNetwork status={isConnected} onRetry={checkInternet} />
+        <CheckNetwork status={network} onRetry={checkInternet} />
       )}
     </View>
   );
@@ -138,14 +141,14 @@ export default _layout;
 const styles = StyleSheet.create({
   appContainer: {
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    minHeight: '100%',
-    minWidth: '100%',
+    flexDirection: "column",
+    justifyContent: "center",
+    minHeight: "100%",
+    minWidth: "100%",
   },
   headerLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     margin: 5,
   },
   profileImage: {
@@ -155,7 +158,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   logoutbtn: {
-    flexDirection: 'row-reverse',
-    alignItems:'center'
+    flexDirection: "row-reverse",
+    alignItems: "center",
   },
 });

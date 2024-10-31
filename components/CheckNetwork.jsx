@@ -9,11 +9,20 @@ const CheckNetwork = ({ status, onRetry }) => {
       colors={["#4c669f", "#3b5998", "#192f6a"]}
       style={styles.CheckNetworkContainer}
     >
-      <Ionicons name="wifi" size={60} color="red" />
-      <Text style={styles.status}>{status || "No Internet Connection"}</Text>
+      <Ionicons
+        name="wifi"
+        size={60}
+        color={status?.isConnected ? "yellow" : "red"}
+      />
+      {!status?.isConnected && (
+        <Text style={styles.status}>No Internet Connection</Text>
+      )}
+      {status?.isConnected && !status?.isNetworkReachable && (
+        <Text style={styles.status}>{status?.type} has no Internet access</Text>
+      )}
       <Text style={styles.message}>Please check your network settings.</Text>
       <TouchableOpacity style={styles.retryButton} onPress={onRetry}>
-        <Text style={styles.retryButtonText}>Reload</Text>
+        <Text style={styles.retryButtonText}> Reload </Text>
       </TouchableOpacity>
     </LinearGradient>
   );

@@ -1,7 +1,7 @@
 {
   "name": "tasktracker",
   "main": "expo-router/entry",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "scripts": {
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
@@ -28,7 +28,7 @@
     "expo-linear-gradient": "^13.0.2",
     "expo-linking": "~6.3.1",
     "expo-modules-core": "~1.12.24",
-    "expo-notifications": "~0.28.18",
+    "expo-notifications": "^0.28.19",
     "expo-router": "~3.5.23",
     "expo-splash-screen": "~0.27.6",
     "expo-status-bar": "~1.12.1",
