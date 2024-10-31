@@ -27,42 +27,40 @@ const GuideVideo = () => {
 
   return (
     <View style={styles.videoContainer}>
-        <Video
-          ref={videRef}
-          // source={{uri:`https://github.com/Panga-Deepthi/10000-coders/raw/refs/heads/main/What's%20it%20like%20to%20work%20at%20Google_.mp4`}} 
-          // source={{uri:`https://drive.google.com/file/d/1yPBS4xffJ1hIpMUByqv70T0jonj0JNOi/view?usp=sharing`}} 
-          source={{uri:`https://github.com/dsak789/Task-Tracker-App/raw/refs/heads/main/assets/videos/guide.mp4`}} 
-          style={styles.video}
-          useNativeControls
-          resizeMode="contain"
-          rate={1.0}
-          volume={1.0}
-          isMuted={false}
-          shouldPlay={false}
-          onPlaybackStatusUpdate={handleBufferStatus}
-        />
-        <View style={styles.container}>
-          <View style={styles.browserNav}>
-            <Text style={styles.videoText}>
-              If the video can't load here, you can open it in the browser:
-            </Text>
-            <TouchableOpacity onPress={openLink}>
-              <Text style={styles.linkText}>
-                Open in Browser
-              </Text>
-            </TouchableOpacity>
-          </View>
+      <Video
+        ref={videRef}
+        // source={{uri:`https://github.com/Panga-Deepthi/10000-coders/raw/refs/heads/main/What's%20it%20like%20to%20work%20at%20Google_.mp4`}}
+        // source={{uri:`https://drive.google.com/file/d/1yPBS4xffJ1hIpMUByqv70T0jonj0JNOi/view?usp=sharing`}}
+        source={{
+          uri: `https://github.com/dsak789/Task-Tracker-App/raw/refs/heads/dev7/assets/videos/guide.mp4`,
+        }}
+        style={styles.video}
+        useNativeControls
+        resizeMode="contain"
+        rate={1.0}
+        volume={1.0}
+        isMuted={false}
+        shouldPlay={false}
+        onPlaybackStatusUpdate={handleBufferStatus}
+      />
+      <View style={styles.container}>
+        <View style={styles.browserNav}>
+          <Text style={styles.videoText}>
+            If the video can't load here, you can open it in the browser:
+          </Text>
+          <TouchableOpacity onPress={openLink}>
+            <Text style={styles.linkText}>Open in Browser</Text>
+          </TouchableOpacity>
         </View>
-        {
-          isBuffering &&
-          (<View style={styles.bufferContainer}>
-            <ActivityIndicator size={70} color={'#00000089'}/>
-            <Text style={styles.bufferText}>Video Loading...</Text>
-          </View>)
-
-        }
+      </View>
+      {isBuffering && (
+        <View style={styles.bufferContainer}>
+          <ActivityIndicator size={70} color={"#00000089"} />
+          <Text style={styles.bufferText}>Video Loading...</Text>
+        </View>
+      )}
     </View>
-  )
+  );
 }
 
 export default GuideVideo

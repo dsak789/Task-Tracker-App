@@ -13,8 +13,9 @@ import * as Notifications from "expo-notifications";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const NotificationSettings = () => {
+  const [userdata, setUserdata] = useState("");
+  const [notify, setNotify] = useState(true);
   const [addTaskEnabled, setAddTaskEnabled] = useState(false);
-  const [userdata, setUserdata] = useState('');
   const [completionReminderEnabled, setCompletionReminderEnabled] =
     useState(false);
 
@@ -25,7 +26,7 @@ const NotificationSettings = () => {
       const completionPreference = await AsyncStorage.getItem("taskCompletion");
       setAddTaskEnabled(JSON.parse(taskPreference));
       setCompletionReminderEnabled(JSON.parse(completionPreference));
-      setUserdata(JSON.parse(userdata))
+      setUserdata(JSON.parse(userdata));
       await checkPermissions();
     })();
   }, []);
@@ -37,6 +38,7 @@ const NotificationSettings = () => {
         const { status: finalStatus } =
           await Notifications.requestPermissionsAsync();
         if (finalStatus !== "granted") {
+          setNotify(false);
           Alert.alert(
             "Permission required",
             "Enable notifications in settings."
@@ -71,7 +73,7 @@ const NotificationSettings = () => {
 
     await Notifications.scheduleNotificationAsync({
       content: {
-        title: `Hey! ${userdata?.name}`||`Hey! Achiever `,
+        title: `Hey! ${userdata?.name}` || `Hey! Achiever `,
         body: `Thankyou for using Task Tracker and your Notification Preferences Saved.`,
         sound: true,
       },
@@ -88,7 +90,7 @@ const NotificationSettings = () => {
         data: { route: "/tasks/AddTask" },
       },
       identifier: "addTaskNotification",
-      trigger: { hour: 22, minute: 49, repeats: true },
+      trigger: { hour: 9, minute: 0, repeats: true },
     });
   };
 
@@ -101,28 +103,43 @@ const NotificationSettings = () => {
         data: { route: "/tasks" },
       },
       identifier: "completionReminderNotification",
-      trigger: { hour: 22, minute: 49, repeats: true },
+      trigger: { hour: 21, minute: 0, repeats: true },
     });
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Notification Preferences</Text>
-      <View style={styles.preferenceContainer}>
-        <Text>Add Task Reminder</Text>
-        <Switch
-          value={addTaskEnabled}
-          onValueChange={(value) => setAddTaskEnabled(value)}
-        />
-      </View>
-      <View style={styles.preferenceContainer}>
-        <Text>Completion Reminder</Text>
-        <Switch
-          value={completionReminderEnabled}
-          onValueChange={(value) => setCompletionReminderEnabled(value)}
-        />
-      </View>
-      <Button title="Save Preferences" onPress={savePreferences} />
+      {!notify ? (
+        <>
+          <Text style={styles.notifyText}>
+            Please Enable Notification in Setting to See Notification
+            Preferences
+          </Text>
+        </>
+      ) : (
+        <View>
+          <View style={styles.preferenceContainer}>
+            <Text>Add Task Reminder</Text>
+            <Switch
+              value={addTaskEnabled}
+              onValueChange={(value) => setAddTaskEnabled(value)}
+            />
+          </View>
+          <View style={styles.preferenceContainer}>
+            <Text>Completion Reminder</Text>
+            <Switch
+              value={completionReminderEnabled}
+              onValueChange={(value) => setCompletionReminderEnabled(value)}
+            />
+          </View>
+          <Button title="Save Preferences" onPress={savePreferences} />
+          <Text style={styles.note}>
+            Note* These Notifications Preferences are set to the app and not to
+            the Account and will not be Sync through online
+          </Text>
+        </View>
+      )}
     </SafeAreaView>
   );
 };
@@ -135,9 +152,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
-    backgroundColor:'white',
-    marginVertical:10,
-    borderRadius:10
+    backgroundColor: "white",
+    marginVertical: 10,
+    borderRadius: 10,
   },
   title: {
     fontSize: 20,
@@ -150,5 +167,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     marginVertical: 10,
+  },
+  notifyText: {
+    fontSize: 15,
+    textAlign: "center",
+  },
+  note: {
+    fontSize: 12,
+    textAlign: "center",
+    marginVertical:10,
+    color:'#ff00009c'
   },
 });
